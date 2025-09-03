@@ -1,0 +1,308 @@
+# 
+# ******************************************************************************
+# *                                                                            *
+# *                   Copyright (C) 2023 Pragmatic.                            *
+# *                           All rights reserved.                             *
+# *                                                                            *
+# *                                                                            *
+# * Pragmatic is the trading name and trademark of Pragmatic Semiconductor Ltd,*
+# * a company registered in England and Wales with company number 07423954.    *
+# *                                                                            *
+# *                                                                            *
+# *                                                                            *
+# ******************************************************************************
+#
+# yod_V2.1.0.beta.2.hotfix.1
+
+VERSION 5.6 ;
+BUSBITCHARS "[]" ; 
+DIVIDERCHAR "/" ; 
+
+UNITS 
+	DATABASE MICRONS 1000 ; 
+	CAPACITANCE PICOFARADS 10 ; 
+END UNITS 
+
+MANUFACTURINGGRID    0.025000 ;
+
+SITE GRID
+	CLASS CORE ;
+	SIZE 6.0 BY 6.0 ;
+END GRID
+
+SITE CoreSite
+	CLASS CORE ;
+	SYMMETRY X Y ;
+	SIZE 6.0 BY 48.0 ;
+END CoreSite
+
+SITE doubleHeightSite
+	CLASS CORE ;
+	SYMMETRY X Y ;
+	SIZE 6.0 BY 96.0 ;
+END doubleHeightSite
+
+LAYER SD
+  TYPE ROUTING ;
+  SPACING 2.0 ;
+  WIDTH 4.0 ;
+  PITCH 6.0 ;
+  DIRECTION VERTICAL ;
+  OFFSET 0 0 ;
+  RESISTANCE RPERSQ 0.425 ;
+  THICKNESS 0.18 ;
+  HEIGHT 0.075 ;
+  CAPACITANCE CPERSQDIST 1e-04 ;
+  #EDGECAPACITANCE 2.7365e-05 ;
+END SD
+
+LAYER CONT
+  TYPE CUT ;
+  SPACING 1.0 ;
+  WIDTH 1.0 ;
+  #PITCH 2.0 ;
+  #PROPERTY contactResistance 18 ;
+END CONT
+
+LAYER GATE
+  TYPE ROUTING ;
+  SPACING 2.0 ;
+  WIDTH 4.0 ;
+  PITCH 6.0 ;
+  DIRECTION HORIZONTAL ;
+  OFFSET 0 0 ;
+  RESISTANCE RPERSQ 0.425 ;
+  THICKNESS 0.18 ;
+  HEIGHT 0.28 ;
+  CAPACITANCE CPERSQDIST 1e-04 ;
+  #EDGECAPACITANCE 2.7365e-05 ;
+END GATE
+
+LAYER VIA1
+  TYPE CUT ;
+  SPACING 1.5 ;
+  WIDTH 1.5 ;
+  #PITCH 3.0 ;
+  #PROPERTY contactResistance 14 ;
+END VIA1
+
+LAYER MT1
+  TYPE ROUTING ;
+  SPACING 2.0 ;
+  WIDTH 4.0 ;
+  PITCH 6.0 ;
+  DIRECTION VERTICAL ;
+  OFFSET 0 0 ;
+  RESISTANCE RPERSQ 0.325 ;
+  THICKNESS 0.13 ;
+  HEIGHT 0.95 ;
+  CAPACITANCE CPERSQDIST 1e-04 ;
+  #EDGECAPACITANCE 2.5157e-05 ;
+END MT1
+
+
+LAYER VIA2
+  TYPE CUT ;
+  SPACING 2.0 ;
+  WIDTH 2.0 ;
+  #PITCH 3.0 ;
+  #PROPERTY contactResistance 14 ;
+END VIA2
+
+LAYER MT2
+  TYPE ROUTING ;
+  SPACING 2.0 ;
+  WIDTH 4.0 ;
+  PITCH 6.0 ;
+  DIRECTION HORIZONTAL ;
+  OFFSET 0 0 ;
+  RESISTANCE RPERSQ 0.325 ;
+  THICKNESS 0.13 ;
+  HEIGHT 1.8 ;
+  CAPACITANCE CPERSQDIST 1e-04 ;
+  #EDGECAPACITANCE 2.5157e-05 ;
+END MT2
+
+VIA SD_GATE DEFAULT
+  RESISTANCE 18 ;
+  LAYER SD ;
+    RECT -2.000 -2.000 2.000 2.000 ;
+  LAYER CONT ;
+    RECT -0.500 -0.500 0.500 0.500 ;
+  LAYER GATE ;
+    RECT -2.000 -2.000 2.000 2.000 ;
+END SD_GATE
+
+VIA GATE_MT1 DEFAULT
+  RESISTANCE 14 ;
+  LAYER GATE ;
+    RECT -2.000 -2.000 2.000 2.000 ;
+  LAYER VIA1 ;
+    RECT -0.750 -0.750 0.750 0.750 ;
+  LAYER MT1 ;
+    RECT -2.000 -2.000 2.000 2.000 ;
+END GATE_MT1
+
+VIA MT1_MT2 DEFAULT
+  RESISTANCE 14 ;
+  LAYER MT1 ;
+    RECT -2.000 -2.000 2.000 2.000 ;
+  LAYER VIA2 ;
+    RECT -1.000 -1.000 1.000 1.000 ;
+  LAYER MT2 ;
+    RECT -2.000 -2.000 2.000 2.000 ;
+END MT1_MT2
+
+
+
+
+
+VIA GATE_SD_2CUT_EW DEFAULT
+  RESISTANCE 9 ;
+  LAYER GATE ;
+    RECT -2 -2 3.000 2 ;
+  LAYER CONT ;
+    RECT -0.5 -0.5 0.5 0.5 ;
+    RECT 1.5 -0.5 2.5 0.5 ;
+  LAYER SD ;
+    RECT -2 -2 3.000 2 ;
+END GATE_SD_2CUT_EW
+
+VIA GATE_SD_2CUT_NS DEFAULT
+  RESISTANCE 9 ;
+  LAYER GATE ;
+    RECT -2 -2 2 3.000 ;
+  LAYER CONT ;
+    RECT -0.5 -0.5 0.5 0.5 ;
+    RECT -0.5 1.5 0.5 2.5 ;
+  LAYER SD ;
+    RECT -2 -2 2 3.000 ;
+END GATE_SD_2CUT_NS
+
+
+
+VIA GATE_MT1_2CUT_EW DEFAULT
+  RESISTANCE 7 ;
+  LAYER GATE ;
+    RECT -2 -2 5.000 2 ;
+  LAYER VIA1 ;
+    RECT -0.750 -0.750 0.750 0.750 ;
+    RECT 2.25 -0.750 3.75 0.750 ;
+  LAYER MT1 ;
+    RECT -2 -2 5.000 2 ;
+END GATE_MT1_2CUT_EW
+
+VIA GATE_MT1_2CUT_NS DEFAULT
+  RESISTANCE 7 ;
+  LAYER GATE ;
+    RECT -2 -2 2 5.000 ;
+  LAYER VIA1 ;
+    RECT -0.750 -0.750 0.750 0.750 ;
+    RECT -0.750 2.25 0.750 3.75 ;
+  LAYER MT1 ;
+    RECT -2 -2 2 5.000 ;
+END GATE_MT1_2CUT_NS
+
+
+
+
+
+
+
+
+VIA MT1_MT2_2CUT_E DEFAULT
+  RESISTANCE 7 ;
+  LAYER MT1 ;
+    RECT -2 -2 8.000 2 ;
+  LAYER VIA2 ;
+    RECT -1.000 -1.000 1.000 1.000 ;
+    RECT  5.000 -1.000 7.000 1.000 ;
+  LAYER MT2 ;
+    RECT -2 -2 8.000 2 ;
+END MT1_MT2_2CUT_E
+
+VIA MT1_MT2_2CUT_W DEFAULT
+  RESISTANCE 7 ;
+  LAYER MT1 ;
+    RECT 2 -2 -8.000 2 ;
+  LAYER VIA2 ;
+    RECT -1.000 -1.000  1.000 1.000 ;
+    RECT -5.000 -1.000 -7.000 1.000 ;
+  LAYER MT2 ;
+    RECT 2 -2 -8.000 2 ;
+END MT1_MT2_2CUT_W
+
+
+VIA MT1_MT2_2CUT_N DEFAULT
+  RESISTANCE 7 ;
+  LAYER MT1 ;
+    RECT -2 -2 2 8.000 ;
+  LAYER VIA2 ;
+    RECT -1.000 -1.000  1.000 1.000 ;
+    RECT -1.000  5.000  1.000 7.000 ;
+  LAYER MT2 ;
+    RECT -2 -2 2 8.000 ;
+END MT1_MT2_2CUT_N
+
+VIA MT1_MT2_2CUT_S DEFAULT
+  RESISTANCE 7 ;
+  LAYER MT1 ;
+    RECT -2 2 2 -8.000 ;
+  LAYER VIA2 ;
+    RECT -1.000 -1.000 1.000  1.000 ;
+    RECT -1.000 -5.000 1.000 -7.000 ;
+  LAYER MT2 ;
+    RECT -2 2 2 -8.000 ;
+END MT1_MT2_2CUT_S
+
+
+
+
+VIARULE SD_GATE-Array GENERATE
+  LAYER SD ;
+    ENCLOSURE 0.500 0.500 ;
+  LAYER GATE ;
+    ENCLOSURE 0.500 0.500 ;
+  LAYER CONT ;
+    RECT -0.500 -0.500 0.500 0.500 ;
+    SPACING 2.000 BY 2.000 ;
+END SD_GATE-Array
+
+VIARULE GATE_MT1-Array GENERATE
+  LAYER GATE ;
+    ENCLOSURE 0.750 0.750 ;
+  LAYER MT1 ;
+    ENCLOSURE 1.000 1.000 ;
+  LAYER VIA1 ;
+    RECT -0.750 -0.750 0.750 0.750 ;
+    SPACING 4.000 BY 4.000 ;
+END GATE_MT1-Array
+
+VIARULE MT1_MT2-Array GENERATE
+  LAYER MT1 ;
+    ENCLOSURE 1.000 1.000 ;
+  LAYER MT2 ;
+    ENCLOSURE 1.000 1.000 ;
+  LAYER VIA2 ;
+    RECT -1.000 -1.000 1.000 1.000 ;
+    SPACING 4.000 BY 4.000 ;
+END MT1_MT2-Array
+
+
+SPACING
+  SAMENET SD SD 2.0 ;
+  SAMENET CONT CONT 1.0 ;
+  SAMENET GATE GATE 3.0 ;
+  SAMENET VIA1 VIA1 1.5 ;
+  SAMENET MT1 MT1 2.0 ;
+  SAMENET VIA2 VIA2 2.0 ;
+  SAMENET MT2 MT2 2.0 ;
+
+#  SAMENET CONT VIA1 0.0 STACK ;
+#  SAMENET VIA1 VIA2 3.0 ;
+END SPACING
+
+END LIBRARY
+#
+# End of file
+#

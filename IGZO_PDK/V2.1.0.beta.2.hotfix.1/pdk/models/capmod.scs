@@ -1,0 +1,31 @@
+* simulator lang=spectre
+
+* if Area(inst) or Perim(inst) is given
+* Area_eff = Area - (Perim)*etch + 4*etch^2
+* Perim_eff = Perim - 8*etch
+*
+* else
+* Area_eff = (L - 2*etch)*(W - 2*etch)
+* Perim_eff = 2 *(W + L - 4*etch)
+*
+* C(inst) = Cj*Area_eff + Cjsw*Perim_eff
+
+* C(T) = C(tnom) * [ 1 + tc1*(T-tnom) + tc2*(T-tnom)^2 ]
+* where T = trise(inst)+temp
+
+library capmod
+
+  section nom
+  model capmod capacitor etch=0u cjsw=0 tc1=0 tc2=0 tnom=25 scalec=1
+  endsection nom
+
+  section min
+  model capmod capacitor etch=0u cjsw=0 tc1=0 tc2=0 tnom=25 scalec=0.962963
+  endsection min
+
+  section max
+  model capmod capacitor etch=0u cjsw=0 tc1=0 tc2=0 tnom=25 scalec=1.037037
+  endsection max
+
+endlibrary capmod
+

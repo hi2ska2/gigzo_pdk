@@ -1,0 +1,38 @@
+* SPICE Model : Release=Helvellyn_V2.1.0.beta.1 Corner=typ Simulator=spectre
+
+simulator lang=spectre
+
+inline subckt nch (d g s)
+parameters
++ l = 1u
++ w = 1u
++vth0 = 0.107245 
++vthl = -0.0232054 
++mubandl = -762.825 
++muband0 = 0.0396067 
++as0 = 0.617711 
++asl = -50103.9 
++rcr = 0.015 
+
+nch (d g s) nch w=w l=l
+
+//model card
+
+model nch atft 
++type     = n
++wd       = 0              ld       = 0              ldif     = 0              
++acm      = 1              level    = 35             
++tox      = 2.5e-08        tnom     = 25             
++vto = vth0+vthl/(l*1e6)
++cgso     = 7.66e-10       cgdo     = 7.66e-10       alphasat = as0+asl*l    
++def0     = 0.361414       delta    = 1.99262        el       = 1.07462        
++emu      = 0.71204        eps      = 2.9            epsi     = 7.62           
++gamma    = 0.751591       gmin     = 3.84507e+25    iol      = 9.9998e-21     
++kasat    = 0              kvt      = 0              lambda   = 0.0154733      
++xl       = -5.97725e-08   xw       = -2.92742e-08   m        = 3.38832        
++muband = mubandl*l+muband0
++sigma0   = 1.83757e-11    v0       = 0.901251       vaa      = 463.137        
++vdsl     = 3.23214        vfb      = -6.42105       vgsl     = 1.00235        
++rsc      = rcr/w        rdc      = rcr/w        vmin     = 0.0178933 
+
+ends nch

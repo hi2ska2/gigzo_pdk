@@ -1,0 +1,365 @@
+
+Spectre (R) Circuit Simulator
+Version 17.1.0.458.isr10 32bit -- 16 Nov 2018
+Copyright (C) 1989-2018 Cadence Design Systems, Inc. All rights reserved worldwide. Cadence and Spectre are registered trademarks of Cadence
+        Design Systems, Inc. All others are the property of their respective holders.
+
+Mail comments to `support@cadence.com'.
+
+Includes RSA BSAFE(R) Cryptographic or Security Protocol Software from RSA Security, Inc.
+
+User: jsw2277   Host: sdslcalc1   HostID: 1AAC8C1D   PID: 108539
+Memory  available: 80.4969 GB  physical: 269.9377 GB
+Linux   : CentOS Linux release 7.9.2009 (Core)
+CPU Type: Intel(R) Xeon(R) Platinum 8160 CPU @ 2.10GHz
+        Socket: Processors [Frequency] (Hyperthreaded Processor)
+        0:       0 [3367.1] ( 48 ),  2 [1699.2] ( 50 ),  4 [3297.3] ( 52 )
+                 6 [2547.5] ( 54 ),  8 [2580.1] ( 56 ), 10 [999.9] ( 58 )
+                12 [1097.6] ( 60 ), 14 [999.9] ( 62 ), 16 [1057.6] ( 64 )
+                18 [1059.7] ( 66 ), 20 [1492.2] ( 68 ), 22 [1073.6] ( 70 )
+                24 [1901.6] ( 72 ), 26 [3381.2] ( 74 ), 28 [1069.1] ( 76 )
+                30 [1160.4] ( 78 ), 32 [3321.0] ( 80 ), 34 [3381.2] ( 82 )
+                36 [1077.7] ( 84 ), 38 [3294.7] ( 86 ), 40 [1044.7] ( 88 )
+                42 [1099.9] ( 90 ), 44 [3367.1] ( 92 ), 46 [1426.3] ( 94 )
+        1:       1 [3370.3] ( 49 ),  3 [999.9] ( 51 ),  5 [3241.9] ( 53 )
+                 7 [1001.7] ( 55 ),  9 [3287.7] ( 57 ), 11 [999.9] ( 59 )
+                13 [1010.4] ( 61 ), 15 [1816.9] ( 63 ), 17 [1530.3] ( 65 )
+                19 [1286.5] ( 67 ), 21 [3228.6] ( 69 ), 23 [1023.1] ( 71 )
+                25 [1099.9] ( 73 ), 27 [3257.8] ( 75 ), 29 [1038.5] ( 77 )
+                31 [3281.1] ( 79 ), 33 [1066.5] ( 81 ), 35 [3228.6] ( 83 )
+                37 [3206.1] ( 85 ), 39 [1094.0] ( 87 ), 41 [999.9] ( 89 )
+                43 [3400.1] ( 91 ), 45 [1000.1] ( 93 ), 47 [1000.0] ( 95 )
+        
+System load averages (1min, 5min, 15min) : 13.8 %, 12.5 %, 11.4 %
+Hyperthreading is enabled
+
+
+Usage: spectre [options] [inputfile]
+
+Options:
+    -help         Lists the Spectre command options and their descriptions. In addition, lists the available components, analyses, and design
+                  checks. You can use `-h' as an abbreviation of `-help'.
+    -help <name>  Displays help information for the specified component or analysis `name'.  If `name' is `all', the help information for all
+                  components and analyses is displayed. You can use `-h' as an abbreviation of `-help'.
+    -helpsort <name> 
+                  Displays help information for the specified component or analysis `name' and sorts the parameters alphabetically. You can use
+                  `-hs' as an abbreviation of `-helpsort'.
+    -helpfull <name> 
+                  Displays more detailed help information for the specified component or analysis `name', including parameter types and range
+                  limits. You can use `-hf' as an abbreviation of `-helpfull'.
+    -helpsortfull <name> 
+                  Displays more detailed help information for the specified component or analysis `name', including parameter types and range
+                  limits.  In addition, sorts all parameters alphabetically. You can use `-hsf' as an abbreviation of `-helpsortfull'.
+*   -param        Ignores the file containing suggested parameter range limits. You can use `-p' as an abbreviation of `-param'.
+*   +param <file> Reads the specified `file' for suggested parameter range limits. You can use `+p' as an abbreviation of `+param'.
+*   +paramdefault <file> 
+                  Reads the default values of parameters from the specified 'file' and applies them. However, if same parameters are specified in
+                  the netlist, those values override the default values specified in the file. This option can be set multiple times. Each line in
+                  the `file' must have a primitive name, a parameter name, and a value. For example, 'tran start 2e-3'. The primitive name is
+                  limited to analyses primitives, which includes the options analysis. The parameter value must be a constant; however,
+                  expressions are not supported.
+*   =paramdefault <file> 
+                  Read the `file' specified and ignore all previously specified files. Please refer to `+paramdefault' for details.
+*   -paramdefault Disable reading any of the parameter defaults specified.
+*   -log          Displays the log information on the standard output (shell) only and does not copy it to a log file. You can use `-l' as an
+                  abbreviation of `-log'.
+*   +log <file>   Displays the log information on the standard output (shell) and copies it to the specified log `file'. You can use `+l' as an
+                  abbreviation of `+log'.
+*   =log <file>   Sends the log information to the specified `file' only and does not display it on the standard output (shell). You can use `=l'
+                  as an abbreviation of `=log'.
+*   -raw <raw>    Saves the simulation results in the specified file or directory. %C is specified in the file or directory name, it is replaced
+                  by circuit name. You can use `-r' as an abbreviation of `-raw'.
+*   -format <fmt> Generates raw data in the specified format.Possible values for `fmt' are nutbin, nutascii, wsfbin, wsfascii, psfbin, psfascii,
+                  psfbinf, psfxl, awb, sst2, fsdb, fsdb5, wdf, uwi, and tr0ascii. You can use `-f' as an abbreviation of `-format'.
+*   +rtsf         Enables the fast waveform viewing mode for psf output. This option can be used only if you have specified the -f psfbin, -f
+                  psfbinf or -f psfxl setting.
+*   -psfversion   Version of psfxl format to use. 1.0 is uncompressed PSFXL, 1.1 is lossless compressed PSFXL. Default is '1.0'
+*   -outdir <path> 
+                  Changes the default location of Spectre output files. However, this option changes neither the location of the raw directory if
+                  explicitly specified by using the -raw option, nor the location of the files that have slashes in their names.
+*   -uwifmt <name> 
+                  Specifies a user-defined output format. To specify multiple formats, use `:' as a delimiter. This option is valid only when the
+                  waveform format is set to uwi by using the -format option.
+*   -uwilib <lib> Specifies the absolute path to the user-defined output format library. This option is used with `-uwifmt'. Use `:' as the
+                  delimiter to specify more than one library.
+*   +checkpoint   Enables the checkpoint capability. You can use `+cp' as an abbreviation of `+checkpoint'.
+*   -checkpoint   Disables the checkpoint capability. You can use `-cp' as an abbreviation of `-checkpoint'.
+*   +savestate    Enables the savestate capability. You can use `+ss' as an abbreviation of `+savestate'.
+*   -savestate    Disables the savestate capability. You can use `-ss' as an abbreviation of `-savestate'.
+*   -recover      Does not restart the simulation even if a checkpoint file exists. You can use `-rec' as an abbreviation of `-recover'.
+*   +recover[=<filename>] 
+                  Restarts the simulation using a checkpoint or savestate file. If both checkpoint and savestate files exist and the filename is
+                  not specified, the savestate file is used. You can use `+rec[=filename]' as an abbreviation of `+recover[=<filename>]'.
+*   -cols <N>     Sets the screen width based on the number of characters specified.  This is needed only if the simulator cannot determine the
+                  screen width automatically or if the default value of 80 is not acceptable. You can use `-c' as an abbreviation of `-cols'. 
+                  Note: Spectre cannot determine the screen width if the output is redirected to a file or a pipe.
+*   -colslog <N>  Sets the log file width based on the number of characters specified. The defaults log file width is 80 characters.
+*   -%X           Specifies that in quoted strings within the netlist, %X should not be replaced with anything, where `X' is any upper- or
+                  lower-case letter.
+*   +%X <string>  Specifies that in quoted strings within the netlist, %X should be replaced with the specified `string', where `X' is any upper-
+                  or lower-case letter.  The string can be modified by using the `:x' operators.
+*   +error        Prints error messages.
+*   -error        Does not print error messages.
+    +varedefnerror 
+                  Prints error messages if Verilog-A modules are redefined.
+*   +warn         Prints warning messages on the screen.
+*   -warn         Does not print warning messages on the screen.
+    -maxwarns <N> Specifies the maximum number of times a particular type of warning message will beissued per analysis. You can use `-maxw' as an
+                  abbreviation of `-maxwarns'.
+    -maxnotes <N> Specifies the maximum number of times a particular type of notice message will beissued per analysis. You can use `-maxn' as an
+                  abbreviation of `-maxnotes'.
+    -maxwarnstolog <N> 
+                  Specifies the maximum number of times a particular type of warning message will beprinted to the log file per analysis. You can
+                  use `-maxwtl' as an abbreviation of `-maxwarnstolog'.
+    -maxnotestolog <N> 
+                  Specifies the maximum number of times a particular type of notice message will beprinted to the log file per analysis. You can
+                  use `-maxntl' as an abbreviation of `-maxnotestolog'.
+*   +note         Prints notice messages on the screen.
+*   -note         Does not print notice messages on the screen.
+*   +info         Prints informational messages.
+*   -info         Does not print informational messages.
+*   -debug        Does not print debugging messages.
+*   +debug        Prints debugging messages.
+*   +diagnose     Enables diagnostic mode that provides debugging information to help you resolve simulation issues related to performance or
+                  convergence.
+    +diagnose_minstep=1e-12 
+                  Prints debugging information if the step size is less than the specified value while running transient analysis in diagnostic
+                  mode.
+    +transteps    Prints all transient steps in diagnostic mode.
+    +diagnose_top=N 
+                  Prints top N (N>=2) signals that limit step size or cause convergence failures in diagnostic mode.
+    +diagnose_fpe Identify devices that cause floating point exceptions and print the bias voltages of the devices during DC and transient
+                  analyses in diagnostic mode. This feature enforces single thread simulation.
+    +detect_negcap 
+                  Identify negative capacitance when convergence difficulty happens during transient analysis in diagnostic mode.
+    +fix_bad_pivot 
+                  Reorder matrix when a bad pivot is detected during matrix factorization in transient analysis.
+    -slave <cmd>  Starts the attached simulator using command `cmd'.
+    -slvhost <hostname> 
+                  Runs the attached simulator on the specified `hostname'. By default, the simulator is run on the local machine.
+    -V            Prints version information.
+    -W            Prints subversion information.
+    -cmiversion   Prints CMI version information.
+    -cmiconfig <file> 
+                  Reads the specified file for information to modify the existing CMI configuration.
+*   -alias <name> Gives `name' to the license manager as the name of the simulator invoked.
+*   -E            Runs C preprocessor on the input file.  In SPICE mode, the first line in the file must be a comment.
+*   -Dx           Defines string `x' and runs the C preprocessor.
+*   -Dx=y         Defines string `x' to be `y' and runs the C preprocessor.
+*   -Ux           Clears string `x' and runs the C preprocessor.
+*   -Idir         Runs the C preprocessor and searches the directory `dir' for include files.
+    +sensdata <file> 
+                  Sends the sensitivity analyses data to the specified file.
+*   +multithread  Enables the multithreading capability. When specified, the Spectre simulator automatically detects the number of processors and
+                  assigns the appropriate number of threads to use.  (see the 'options' help page for more information on using multithreading).
+                  '+mt' can be used as an abbreviation of '+multithread'.
+*   +multithread=<N> 
+                  Enables the multithreading capability, where, N is the number of threads specified. A maximum of 64 threads are allowed. '+mt'
+                  can be used as an abbreviation of '+multithread'.
+*   -multithread  Disables the multithreading capability.  By default, multithreading is disabled for Spectre but is enabled for APS. '-mt' can be
+                  used as an abbreviation of '-multithread'.
+*   +mtmode=value Selects the multithreading mode. Possible values are 'passive' and 'active'.
+    -processor    Sets the CPU affinity of a process similar to the Linux 'taskset' command. It specifies a numerical list of processors that can
+                  contain multiple items, separated by comma. For example, '-processor 0-3,5,7'. If you specify a numerical value, which is out of
+                  range for the current system, the process is terminated and an 'Invalid argument' error message is displayed You can use `-proc'
+                  as an abbreviation of `-processor'.
+    +dp[=rsh|ssh] Enables you to set up distributed APS. This option can only be used with the +aps command-line option and is not supported in
+                  the baseline mode. Use the rsh, ssh or autodetection methods to perform distributed processing. When using the rsh or ssh
+                  methods, a list of machine names must be specified using the +hosts option. If no argument is specified with the +dp option, the
+                  Spectre simulator will first check if the simulation is being controlled by LSF or Sun Grid Engine, and if so, will use LSF or
+                  Sun Grid Engine to spawn any sub-processes. If LSF or Sun Grid Engine is not controlling the simulation, then the +dp option
+                  will default to using rsh.
+    +hosts "<hostname>: <number_of_cores>" 
+                  Defines the machine specifications that will be used for distributed processing. This option must be used when you specify the
+                  rsh or ssh values with the +dp option. The format of the machine specification is the same for both rsh and ssh. Each machine
+                  specification, which, can be separated by the space delimiter contains the name of the machine and number of cores to be used on
+                  the machine in the following format: "host_name:number_of_cores". For example, +hosts "hostA:4 hostB:4". This setting specifies
+                  that four cores can be used on both hostA and hostB for performing the simulation.
+    -interactive  Runs Spectre in the non-interactive mode, that is, processes the input file and then returns to the command prompt. You can use
+                  `-inter' as an abbreviation of `-interactive'.
+    +interactive  Runs Spectre in the default interactive mode. You can use `+inter' as an abbreviation of `+interactive'.
+    +interactive=<type> 
+                  Runs Spectre in the interactive mode based on the type specified. You can use `+inter' as an abbreviation of `+interactive'.
+                  Possible values for `type' are skill and mpsc.
+    +mpssession=<sessionName> 
+                  Specifies the session name for running an interactive session using MPS.  This option must be specified when using the
+                  +interactive=mpsc setting.
+    +mpshost=<sessionHost> 
+                  Specifies the name of the session host that will be used for running an interactive session using MPS.
+    -64           Runs the 64-bit Spectre binary.
+    -32           Runs the 32-bit Spectre binary.
+    -mdlcontrol   Ignores the MDL control file. You can use `-mdl' as an abbreviation of `-mdlcontrol'.
+    +mdlcontrol   Runs Spectre with the default MDL control file. You can use `+mdl' as an abbreviation of `+mdlcontrol'.
+    +mdlcontrole  Runs Spectre with the default MDL control file. You can use `+mdle' as an abbreviation of `+mdlcontrole'.
+    =mdlcontrol <file> 
+                  Specifies the location for the MDL control file. You can use `=mdl' as an abbreviation of `=mdlcontrol'.
+    =mdlcontrole <file> 
+                  Specifies the location for the MDL control file. You can use `=mdle' as an abbreviation of `=mdlcontrole'.
+*   -checklimitfile <file> 
+                  Writes assert violations in the specified file. In `file', %C is replaced by the circuit name. You can use `-cl' as an
+                  abbreviation of `-checklimitfile'.
+*   -dochecklimit Disables the checklimit capability. You can use `-docl' as an abbreviation of `-dochecklimit'.
+*   +dochecklimit Enables the checklimit capability. You can use `+docl' as an abbreviation of `+dochecklimit'.
+*   -dynchecks    Disables the dynchecks capability.
+*   +lqtimeout <value> 
+                  Specifies the duration (in seconds) for which Spectre should wait to retrieve a license. When set to 0, Spectre waits until the
+                  license is available. You can use `+lqt' as an abbreviation of `+lqtimeout'.
+*   +lqsleep <value> 
+                  Specifies the wait duration between two attempts made by Spectre to check out a license when queuing. Setting the value to a
+                  positive number overrides the default wait duration of 30 seconds. You can use `+lqs' as an abbreviation of `+lqsleep'.
+*   +lqmmtoken    Enables queuing for token license capability. When specified, Spectre registers the token request with the license server and
+                  waits for authorization. In addition, Spectre ignores all non-token licenses during the wait time since only token licenses are
+                  queued.
+    +lsuspend     Enables the license suspend/resume capability. When Spectre receives SIGTSTP, it checks in all the licenses before it gets
+                  suspended. The licenses are checked out again when SIGCONT is received. You can use `+lsusp' as an abbreviation of `+lsuspend'.
+    +lmode <value> 
+                  Checks out the required licenses according to the specified value during the initialization phase. Possible values are '<num>'
+                  and 'RF'. '<num>' is a numeric value greater than 1, which specifies the number of token licenses to be checked out together.
+                  For example, to run APS with the multi-core option, specify '+lmode 4'. 'RF' checks out the required licenses for the RF
+                  functionality. This value is case insensitive. If the simulation requires more licenses than specified using 'lmode', the
+                  additional licenses are checked out after the initialization phase. 
+*   +lorder <value> 
+                  Specifies the license check out order. Values are case insensitive. Possible values are as follows: 
+                  'PRODUCT': Spectre attempts to check out the product+options combination licenses only. 
+                  'MMSIM': Spectre attempts to check out the Virtuoso_Multi_mode_Simulation (MMSIM) tokens only. 
+                  'PRODUCT:MMSIM': Spectre attempts to check out product licenses first and then MMSIM tokens. 
+                  'MMSIM:PRODUCT': Spectre attempts to check out MMSIM tokens first and then product licenses. 
+                  Default is 'PRODUCT:MMSIM'.
+    -ahdlcom value 
+                  Starting with MMSIM 15.1, support for this option has been removed.
+    -va,define MACRO[=value] 
+                  Defines a macro with higher priority than the one defined in Verilog-A files.
+    -rf_ahdl_functionality =value 
+                  Specifies the value for AHDL functionality in RF analysis. Possible values are `141' or `151'. Default value is `151'. 
+    -ahdllint[=value] 
+                  Enable Verilog-A linter check. Possible values are 'no', 'warn', 'static', 'error', and 'force'. The default value is 'warn'.
+                  This option is not available in Spectre base. It is available only in APS or XPS.
+    -ahdllint_maxwarn[=value] 
+                  Specifies the maximum number of Verilog-A linter warning messages to be reported by the simulator for each message ID. The
+                  default value is 5.
+    -ahdllint_summary_maxentries[=value] 
+                  Specifies the maximum number of messages to display in dynamic linter summary. The default value is 25.
+    -ahdllint_warn_id=value 
+                  Specifies a message ID and applies the -ahdllint_maxwarn option only to the specified message ID. This option should always be
+                  used with the -ahdllint_maxwarn option and should be directly specified after it in the command line, otherwise, the option will
+                  be ignored.
+    -ahdllint_log <file> 
+                  Specifies the file name to which the Verilog-A linter messages need to be written. By default, Verilog-A linter messages are
+                  written to the output log file.
+    -ahdllibdir path 
+                  The -ahdllibdir option redirects the library files generated by AHDL to the specified path. If both -ahdllibddir and -outdir
+                  options are specified, the library files generated by AHDL will be stored in the path specified by the -ahdllibdir option and
+                  other output files will be stored in the path specified by the -outdir option.
+    -ahdlsourceramp 
+                  Disables source ramping for Verilog-A models. Source ramping of Verilog-A models is enabled by default because it helps with
+                  convergence for most designs. However, in certain corner cases, the default behavior could lead to convergence difficulties,
+                  which can be avoided by using this option.
+    -ahdlshipdbdir=<sharing_path> 
+                  Specifies the sharing directory for Verilog-A library compilation. Given this option, the simulator would search for reusable
+                  library in the <sharing_path>. If library is found, reuse it, otherwise, compile a new library in the local directory.
+    -ahdlshipdbmode="read_only" or "create_or_update" 
+                  Indicates whether needs create/update the library under <sharing_path> specified by -ahdlshipdbdir. "read_only" means not to
+                  create/update, which is the default behavior for -ahdlshipdbdir appearing alone.  "create_or_update" means that if under
+                  <sharing_path>, there isn't any library or the library is outdated, copy the newly-built library in local directory to
+                  <sharing_path>.
+    +errpreset=value 
+                  Selects a predetermined collection of parameter settings. Possible values are 'liberal', 'moderate' and 'conservative'.
+*   +aps          Enables APS mode.
+*   +aps=value    Enables APS mode and overrides the errpreset value in all transient analyses to apply the specified value. Possible values are
+                  `liberal' `moderate', and `conservative'.
+*   ++aps         Enables ++aps mode. Unlike the +aps mode, the ++aps mode uses a different time-step control algorithm compared to Spectre. This
+                  can result in improved performance, while satisfying error tolerances and constraints.
+*   ++aps=value   Enables ++aps mode and overrides the errpreset value in all transient analyses to apply the specified value. Possible values are
+                  'liberal', 'moderate' and 'conservative'.
+    +ms           Enables XPS-MS mode.
+    +xps          Enables XPS mode.
+    +xps=s[value] Enables XPS SPICE Accurate mode. The optional value is the speed setting.
+    +speed=value  The simulation group speed setting. The lower number means conservative setting.
+    +query=value  Queries the recommended number of threads or the licenses that are required to run the simulation on the current machine or on
+                  one with similar configuration. Possible values are 'mtinfo', 'meminfo', 'all', 'alllic', and 'tokenlic'. 'mtinfo' prints the
+                  recommended number of threads, 'meminfo' prints the memory usage estimate, 'all' prints the recommended number of threads and
+                  the memory usage estimate, 'alllic' prints all possible license combinations for the design used for simulation and 'tokenlic'
+                  prints the number of MMSIM tokens required. The default value is 'tokenlic'.
+    +liclog       Writes the license check-in and check-out information in the log file.
+    +disk_check[=value] 
+                  Suspend the simulation when available disk storage is less than N bytes. Here, N is the value specified using the optional
+                  [=value] of +disk_check or netlist option 'disk_check_thresh'. For example, +disk_check=1e10.
+    -clearcache   Clear spectre cache directory "/home/<username>/.cadence/mmsim/". You can use `-cc' as an abbreviation of `-clearcache'.
+    -disableCPP   Disable cpp preprocess for situation that spectre implicit call cpp such as -I and -D. However, if explicit specified -E,
+                  -disableCPP will not take effect.
+    +dcopt        The dcopt option speeds up the DC simulation in Spectre and APS for post-layout circuits that 
+          consist of a large number of parasitic resistors and capacitors, which require significant 
+          time in DC simulation. It can also be used to solve the non-convergence issues in DC simulations
+          of any other circuit
+
+          Note: In some cases, the DC solution obtained using the dcopt command-line option may not be as accurate as the true DC solution.
+    +lite         Enables a lightweight simulation session where most or all of the computationally intensive features (device check asserts, info
+                  analysis, current probing, power probing, instance preservation, ...) are turned off. By default, ++aps is used as the
+                  simulation engine. This can be a very useful tool in isolating the computational time used by simulation engine during a
+                  simulation performance debugging.
+*   +config <file> 
+                  Add a config file to the list of config files.
+*   =config <file> 
+                  Will not include previous `+config'.
+*   -config       Disables all config files.
+    +top <value>  When you specify +top with a subcircuit name, all elements, models, and so on will be exposed to the top level and the
+                  subcircuit will not exist anymore. As a result, instantiation from this subcircuit will be illegal. Instances inside the
+                  subcircuit will automatically connect to the instance at the top level if they connect to the same node.
+    -hpc          Disables the hpc option
+
+Notes:
+For +/- pairs of options, the default setting is listed first.
+Options marked with * are set by default when the `spectre_DEFAULTS' or `SPECTRE_DEFAULTS' environment variable is specified.
+
+Available components:
+    a2d              angelov          angelov_gan      asm_gan          assert           atft             b3soipd          bend
+    bend2            bht              bht0             bit              bjt              bjt301*          bjt500*          bjt500t*
+    bjt503*          bjt504*          bjt504t*         bjt505*          bjt505t*         bjt3500*         bjt3500t*        bjtd504*
+    bjtd504t*        bjtd505*         bjtd505t*        bjtd3500*        bjtd3500t*       bsim1            bsim2            bsim3
+    bsim3v3          bsim4            bsim6            bsimbulk         bsimcmg          bsimimg          bsimsoi          bsource_resistor
+    capacitor        capq             cccs             ccvs             cktrom           conductor        core             corner
+    cross            curve            d2a              dcblock          dcfeed           delay            delta_gate       dielectric
+    dio500*          diode            diode_cmc        ekv              ekv3             ekv3_nqs         ekv3_r4          ekv3_rf
+    ekv3_s           fourier          fracpole         gaas             hbt              hisim2           hisim_diode      hisim_hv
+    hisim_igbt       hisimhv_va       hisimsoi         hisimsoi_bt      hisimsoi_fb      hvmos            ibis_buffer      igbt0
+    inductor         intcap*          iprobe           isource          iswitch          jfet             jfet100          jfetidg*
+    jfetidgt*        jitterevent      jj               juncap*          juncap200*       juncap_eldo*     loc              mos0
+    mos1             mos2             mos3             mos15*           mos30*           mos40*           mos40t*          mos705*
+    mos902*          mos903*          mos903c*         mos903e*         mos903t*         mos1000*         mos1100*         mos1100e*
+    mos1101e*        mos1101et*       mos1102e*        mos1102et*       mos2001*         mos2001e*        mos2001et*       mos2001t*
+    mos2002*         mos2002e*        mos2002et*       mos2002t*        mos3002*         mos3100*         mos3100t*        mos11010*
+    mos11010t*       mos11011*        mos11011t*       mos11020*        mos11020t*       mos11021*        mos11021t*       mosvar
+    msline           mtline           mutual_inductor  mvsg_gan         nodcap*          node             nport            ovcheck*
+    ovcheck6*        paramtest        pattern          pcccs            pccvs            phy_res          port             print
+    psitft           psp102*          psp102e*         psp103*          psp103t*         psp1020*         psp1021*         pspnqs102e*
+    pspnqs103*       pspnqs1020*      pspnqs1021*      pvccs            pvcvs            quantity         r2               r3
+    rdiff*           relay            resistor         rlck_matrix      scccs            sccvs            spmos            stackup
+    step             svccs            svcvs            switch           tee              tline            tom2             tom3
+    tom3v1           transformer      utsoi2           vbic             vccs             vcvs             vsource          vswitch
+    winding          wprobe           wsource          zcccs            zccvs            zvccs            zvcvs            
+
+    Components marked with * are loaded from shared objects
+
+Available analyses/controls:
+    ac               acmatch          alter            altergroup       check            checklimit       cosim            dc
+    dcmatch          devchrz          dspf_options     envlp            hb               hbac             hbnoise          hbsp
+    hbstb            hbxf             info             lf               loadpull         montecarlo       noise            options
+    pac              pnoise           psp              pss              pstb             pxf              pz               qpac
+    qpnoise          qpsp             qpss             qpxf             reliability      set              shell            sp
+    stb              stress           sweep            tdr              thermal          tran             uti              xf
+
+Available circuit checks:
+    dyn_activity     dyn_actnode      dyn_capv         dyn_dcpath       dyn_delay        dyn_diodev       dyn_exi          dyn_exrf
+    dyn_floatdcpath  dyn_glitch       dyn_highz        dyn_mosv         dyn_nodecap      dyn_noisynode    dyn_pulsewidth   dyn_resv
+    dyn_setuphold    dyn_stahighz     dyn_subcktport   dyn_subcktpwr    dyn_uninilatch   static_capacitor static_capv      static_coupling
+    static_dcpath    static_diodev    static_erc       static_highz     static_mosv      static_nmos2vdd  static_nmosb     static_nmosvgs
+    static_pmos2gnd  static_pmosb     static_pmosvgs   static_rcdelay   static_resistor  static_resv      static_subcktport static_tgate
+    static_vconflict static_voltdomain
+
+Other available topics:
+    ahdllint         analogmodel      bsource          checkpoint       cmiconfig        constants        convergence      dcopt
+    encryption       expressions      fastdc           faults           functions        global           hpc              ibis
+    ic               if               include          keywords         library          memory           mts              nodeset
+    param_limits     parameters       paramset         postlayout       pspice_include   rfmemory         save             savestate
+    sens             spectrerf        stitch           subckt           vector           veriloga         xpsski
+

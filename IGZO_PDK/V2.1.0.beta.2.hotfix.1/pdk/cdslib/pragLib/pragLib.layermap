@@ -1,0 +1,108 @@
+# Layer Map
+# yod layer.map
+
+# layerName	layerPurpose	layerNumber	dataType
+#				1-194,256-	0-255
+
+# Mask layers
+SD		drawing		1		0
+SEMI		drawing		2		0
+RES		drawing		802		0
+RES2		drawing		452		0
+RES4		drawing		454		0
+CONT		drawing		3		0
+GATE		drawing		4		0
+VIA1 		drawing		6		0
+MT1		drawing		7		0
+VIA2		drawing		8		0
+MT2		drawing		9		0
+MT2A		drawing		91		0	; MT2 option A
+MT2B		drawing		92		0	; MT2 option B
+RV		drawing		10		0
+RDL		drawing		15		0
+PAD2		drawing		16		0
+
+# Metal text layers
+SDTEXT		drawing		101		0	; Merge with SD
+SEMITEXT	drawing		102		0	; Merge with SEMI
+CONTTEXT	drawing		103		0	; Merge with CONT
+GATETEXT	drawing		104		0	; Merge with GATE
+VIA1TEXT	drawing		106		0	; Merge with VIA1
+MT1TEXT		drawing		107		0	; Merge with MT1
+VIA2TEXT	drawing		108		0	; Merge with VIA2
+MT2TEXT		drawing		109		0	; Merge with MT2
+RVTEXT		drawing		110		0	; Merge with RV
+RDLTEXT		drawing		115		0	; Merge with RDL
+#RWTEXT		drawing		116		0	; Merge with RW
+RESTEXT		drawing		852		0	; Merge with RES
+
+
+
+# Pin layers
+#SD		pin		1		0
+#GATE		pin		4		0
+#MT1		pin		7		0
+#MT2		pin		9		0
+#MT2A		pin		91		0
+#MT2B		pin		92		0
+#PAD		pin		10		0
+#RDL		pin		15		0
+
+
+# Fill layers
+FILLSD		fill		401		0	; Merge with SD
+FILLSEMI	fill		402		0	; Merge with SEMI
+FILLCONT	fill		403		0	; Merge with CONT
+FILLGATE	fill		404		0	; Merge with GATE
+FILLVIA1	fill		406		0	; Merge with VIA1
+FILLMT1		fill		407		0	; Merge with MT1
+FILLVIA2	fill		408		0	; Merge with VIA2
+FILLMT2		fill		409		0	; Merge with MT2
+FILLRV		fill		410		0	; Merge with RV
+FILLRDL		fill		415		0	; Merge with RDL
+FILLRES		fill		812		0	; Merge with RES
+
+NOFILLSD	blockage	441		0
+NOFILLSEMI	blockage	442		0
+NOFILLCONT	blockage	443		0
+NOFILLGATE	blockage	444		0
+NOFILLVIA1	blockage	446		0
+NOFILLMT1	blockage	447		0
+NOFILLVIA2	blockage	448		0
+NOFILLMT2	blockage	449		0
+NOFILLRV	blockage	450		0
+NOFILLRDL	blockage	455		0
+NOFILLRES	blockage	842		0
+
+
+NOSD		blockage	501		0
+NOGATE		blockage	504		0
+NOMT1		blockage	507		0
+NOMT2		blockage	509		0
+NORDL		blockage	515		0
+
+# Obstruction layers
+keepoutSD	blockage	41		0
+keepoutGATE	blockage	44		0
+keepoutMT1	blockage	47		0
+keepoutMT2	blockage	49		0
+
+# CAD layers
+BOUND		boundary	0		0	; Boundary layer
+BULK		drawing		800		0	; Miscellaneous global layer
+CAPID		drawing		120		0	; Capacitor ID layer
+RESIDSD		drawing		122		0	; SD Metal Resistor ID layer
+LFUSEID		drawing		123		0	; Laser fuse ID layer
+RESIDGATE	drawing		124		0	; GATE Metal Resistor ID layer
+RESIDMT1	drawing		125		0	; MT1 Metal Resistor ID layer
+RESIDMT2	drawing		126		0	; MT2 Metal Resistor ID layer
+RESIDRDL	drawing		127		0	; RDL Metal Resistor ID layer
+CAPID2		drawing		128		0	; Non-Cap ID layer
+LFUSEALIGNID	drawing		129		0	; Laser fuse Alignment ID layer
+LFUSEALIGNMT2	drawing		559		0	; Laser fuse Alignment layer(MT2)
+
+# Splice and dice
+DICE		drawing		130		0	; Chips
+RBOUND		drawing		131		0	; Reticle Boundary Layer
+
+

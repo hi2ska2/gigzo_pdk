@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      jsw2277
+HostName                       sdslcalc1
+ProcessIdentifier              55516
+ProcessCreationTime_UTC        1756186824
+ProcessCreationTime_Readable   Tue Aug 26 14:40:24 2025 KST
+AppIdentifier                  OA File System Design Manager
+OSType                         unix
+ReasonForPlacingEditLock       OpenAccess edit lock
+FilePathUsedToEditLock         /home/jsw2277/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk/cdslib/pragLib/nch/data.dm.cdslck
+TimeEditLocked                 Mon Sep  1 17:30:48 2025 KST

@@ -1,0 +1,1173 @@
+// ***************************************************************************************
+
+title "yod DRC V2.1.0.beta.2.hotfix.1"
+
+
+
+// ***************************************************************************************
+// Setup
+// ***************************************************************************************
+
+precision	1000
+resolution	25
+unit length	u
+
+flag skew yes
+flag offgrid yes
+drc tolerance factor 0.001
+
+
+#IFDEF NOPCM
+exclude cell "Overview_PCM*"
+#ENDIF
+
+
+// ***************************************************************************************
+// Layers
+// ***************************************************************************************
+
+
+// Actual layers
+layer	sd		1
+layer	sdtext		101
+layer	fillsd		401
+layer	nofillsd	441
+layer	nosd		501
+layer	semi		2
+layer	semitext	102
+layer	fillsemi	402
+layer	nofillsemi	442
+layer	res		802
+layer	restext		852
+layer	fillres		812
+layer	nofillres	842
+layer	cont		3
+layer	conttext	103
+layer	fillcont	403
+layer	nofillcont	443
+layer	gate		4
+layer	gatetext	104
+layer	fillgate	404
+layer	nofillgate	444
+layer	nogate		504
+layer	mt0		5
+layer	via1		6
+layer	via1text	106
+layer	fillvia1	406
+layer	nofillvia1	446
+layer	mt1		7
+layer	mt1text		107
+layer	fillmt1		407
+layer	nofillmt1	447
+layer	nomt1		507
+layer	via2		8
+layer	via2text	108
+layer	fillvia2	408
+layer	nofillvia2	448
+layer	mt2		9
+layer	mt2text		109
+layer	fillmt2		409
+layer	nofillmt2	449
+layer	nomt2		509
+layer	rv		10
+layer	rvtext		110
+layer	fillrv		410
+layer	nofillrv	450
+layer	rdl		15
+layer	rdltext		115
+layer	fillrdl		415
+layer	nofillrdl	455
+layer	nordl		515
+layer	pad2		16
+layer	lfusealignid	129
+layer 	lfusealignmt2	559
+
+
+
+
+layer	capid		120
+layer	capid2		128
+layer	residsd		122
+layer	residgate	124
+layer	residmt1	125
+layer	residmt2	126
+layer	residrdl	127
+layer	lfuseid		123
+layer	dice		130
+layer	rbound		131
+
+
+
+// ***************************************************************************************
+// Rules
+// ***************************************************************************************
+
+all_sd = or sd sdtext fillsd
+all_gate = or gate gatetext fillgate
+all_cont = or cont fillcont conttext
+
+
+all_mt1 = or mt1 mt1text fillmt1
+all_mt2 = or mt2 mt2text fillmt2 lfusealignmt2 
+all_rdl = or rdl rdltext fillrdl
+all_res_semi = or semi semitext res restext fillres fillsemi
+all_res = or res restext fillres
+all_semi = or semi semitext fillsemi
+all_via1 = or via1 via1text fillvia1
+all_via2 = or via2 via2text fillvia2
+all_rv = or rv rvtext fillrv
+
+res_semi = res or semi
+channel = ( semi and gate ) not sd
+resistor = res not sd
+sd_holes = holes sd == 72.0
+gate_holes = holes gate == 72.0
+mt1_holes = holes mt1 == 72.0
+mt2_holes = holes mt2 == 72.0
+all_vias = or via1 via2 cont
+all_text = or sdtext gatetext mt1text mt2text rdltext semitext conttext via1text via2text rvtext restext
+all_fill = or fillsd fillgate fillmt1 fillmt2 fillrdl fillsemi fillcont fillvia1 fillvia2 fillrv fillres
+
+
+all_except_sdtext   = or sd        fillsd all_res_semi all_cont all_gate                   all_via1 all_mt1 all_via2 all_mt2  all_rv  all_rdl
+all_for_sdfill      = or sd sdtext        all_res_semi all_cont all_gate                                              rv         lfuseid
+all_except_semitext = or all_sd		      res_semi all_cont all_gate                   all_via1 all_mt1 all_via2 all_mt2  all_rv  all_rdl
+all_except_gatetext = or all_sd           all_res_semi all_cont     gate          fillgate all_via1 all_mt1 all_via2 all_mt2  all_rv  all_rdl
+all_except_mt1text  = or all_sd           all_res_semi all_cont all_gate                   all_via1     mt1 all_via2 all_mt2  all_rv  all_rdl
+all_except_mt2text  = or all_sd           all_res_semi all_cont all_gate                   all_via1 all_mt1 all_via2  mt2    all_rv  all_rdl
+all_except_rdltext  = or all_sd           all_res_semi all_cont all_gate                   all_via1 all_mt1 all_via2 all_mt2  all_rv      rdl
+all_except_conttext = or all_sd		  all_res_semi cont     all_gate                   all_via1 all_mt1 all_via2 all_mt2  all_rv  all_rdl
+all_except_via1text = or all_sd		  all_res_semi all_cont all_gate                       via1 all_mt1 all_via2 all_mt2  all_rv  all_rdl
+all_except_via2text = or all_sd		  all_res_semi all_cont all_gate                   all_via1 all_mt1     via2 all_mt2  all_rv  all_rdl
+all_except_rvtext   = or all_sd		  all_res_semi all_cont all_gate                   all_via1 all_mt1 all_via2 all_mt2      rv  all_rdl
+all_except_restext  = or all_sd		      res_semi all_cont all_gate                   all_via1 all_mt1 all_via2 all_mt2  all_rv  all_rdl
+all_except_mt2  = or all_sd           all_res_semi all_cont all_gate                   all_via1 all_mt1 all_via2     mt2text  lfusealignmt2 all_rv  all_rdl
+all_except_lfusealignmt2	=	or all_sd           all_res_semi all_cont all_gate                   all_via1 all_mt1 all_via2     mt2text  mt2 all_rv  all_rdl
+
+
+all                 = or all_sd           all_res_semi all_cont all_gate all_via1 all_mt1 all_via2 all_mt2 all_rv all_rdl
+
+
+
+
+// ***************************************************************************************
+// OFFGRID rule
+// ***************************************************************************************
+
+// ***************************************************************************************
+exclude offgrid sdtext gatetext mt1text mt2text rdltext semitext conttext via1text via2text rvtext restext
+
+layer_offgrid {
+	drawn offgrid
+}
+
+// ***************************************************************************************
+// SD rules
+// ***************************************************************************************
+
+
+
+sd.1 { @ sd width < 2.0
+	int sd < 2.0 abut < 90 singular
+}
+
+sd.2 { @ sd to sd spacing in semi < 0.6
+	sd_semi_plus = sd and semi
+	ext sd_semi_plus < 0.6 abut < 90 singular
+}
+
+sd.3 { @ sd to sd spacing outside semi < 2.0
+	//tmp = sd not (size semi by 0.2)
+	//ext tmp < 2.0 abut < 90 singular
+	tmp  = sd outside edge (size semi by 0.2)
+	ext tmp < 2.0 abut < 90 
+}
+
+sd.4 { @ max length of sd at min width > 200.0
+	length (sd not (size sd by 1.0 underover)) > 200.0
+}
+
+sd.5 { @ min width for long lines < 4.0
+	int (length sd > 200.0) < 4.0
+}
+
+#IFNDEF NOWARNINGS
+
+sd.6W { @ gap width < 6.0 for sd with width >= 30.0
+	wide_sd = (not touch sd sd_holes) with width >= 30.0
+	ext wide_sd < 6.0 abut < 90 singular
+}
+
+sd.7W { @ sd I/O width <= 2.0
+	IO_sd = interact sd rv
+	int IO_sd <= 2.0 abut < 90 singular
+}
+
+#ENDIF
+
+// ***************************************************************************************
+sdtext.1 { @ sdtext to any layer spacing < 3.0
+	ext sdtext all_except_sdtext < 3.0 abut < 90 singular overlap
+}
+
+sdtext.2 { @ any layer not allowed on sdtext
+	sdtext and all_except_sdtext
+}
+
+fillsd.1 { @ Unauthorised use of fillsd
+	chip = extent drawn original
+	fillsd interact chip	
+}
+
+nofillsd.1 { @ Unauthorised use of nofillsd
+	chip = extent drawn original
+	nofillsd interact chip 	
+}
+
+nofillsd.2 { @ fillsd not allowed on nofillsd
+	fillsd and nofillsd
+}
+
+nosd.1 { @ Unauthorised use of nosd
+	chip = extent drawn original
+	nosd interact chip 
+}
+
+nosd.2 { @ sd,sdtext not allowed on nosd 
+	nosd and (sd or sdtext)
+
+}
+
+// ***************************************************************************************
+// Resistor rules
+// ***************************************************************************************
+res.2 { @ res to res spacing < 1.4
+	ext res < 1.4 abut < 90 singular
+}
+
+res.3 { @ sd overlap res < 1.0
+	int sd res < 1.0 abut < 90 singular
+}
+
+res.4 { @ sd enclose res < 1.0
+	enc res sd < 1.0 abut < 90 singular opposite
+}
+
+res.5 { @ sd to res spacing < 0.5
+	ext sd res < 0.5 abut < 90 singular
+}
+
+res.6 { @ res width < 1.4
+	int ( resistor not touch edge sd ) < 1.4 abut < 90 
+}
+
+res.7 { @ res width > 75.0
+	length ( resistor touch edge sd ) > 75.0
+}
+
+res.8 { @ res length < 3.0
+	int ( resistor touch edge sd ) < 3.0 abut < 90 
+}
+
+res.9 { @ res length > 120.0
+	length ( resistor not touch edge sd ) > 120.0
+}
+
+restext.1 { @ restext to any layer spacing < 3.0
+	ext restext all_except_restext < 3.0 abut < 90 singular overlap
+}
+
+restext.2 { @ any layer not allowed on restext
+	restext and all_except_restext
+}
+
+fillres.1 { @ Unauthorised use of fillres
+	chip = extent drawn original
+	fillres	interact chip 
+}
+
+nofillres.1 { @ Unauthorised use of nofillres
+	chip = extent drawn original
+	nofillres interact chip 	
+}
+
+// ***************************************************************************************
+// Semi rules
+// ***************************************************************************************
+semi.1 { @ semi width < 1.6
+	int semi < 1.6 abut < 90 singular
+}
+
+semi.2 { @ semi to semi spacing < 2.0
+	ext semi < 2.0 abut < 90 singular
+}
+
+semi.3 { @ sd overlap semi < 0.5
+	int sd semi < 0.5 abut < 90 singular
+}
+
+semi.4 { @ sd to semi spacing < 0.5
+	ext sd semi < 0.5 abut < 90 singular
+}
+
+semi.5 { @ sd extension beyond semi transistor width < 0.2
+	@ sd extension beyond semi transistor width = 0
+	@ sd extension beyond semi transistor width < 0
+	tmp = semi touch edge ( semi outside edge sd )
+	enc tmp sd < 0.2 opposite region
+	coincident edge sd semi
+	semi outside edge ( sd or gate )
+}
+
+semi.6 { @ res to semi spacing < 3.0
+	ext res semi < 3.0 abut < 90 singular
+}
+
+semi.7 { @ minimum transistor channel width < 2.0
+	int ( channel not touch edge sd ) < 2.0 abut < 90 
+}
+
+semi.8 { @ transistor channel width > 20.0
+	length (channel not touch edge semi) > 20.0
+}
+
+semi.9 { @ transistor channel length > 5.0
+	length (channel not touch edge sd) > 5.0
+}
+
+semitext.1 { @ semitext to any layer spacing < 3.0
+	ext semitext all_except_semitext < 3.0 abut < 90 singular overlap
+}
+
+semitext.2 { @ any layer not allowed on semitext
+	semitext and all_except_semitext
+}
+
+fillsemi.1 { @ Unauthorised use of fillsemi
+	chip = extent drawn original
+	fillsemi interact chip 	
+}
+
+nofillsemi.1 { @ Unauthorised use of nofillsemi
+	chip = extent drawn original
+	nofillsemi interact chip 	
+}
+
+// ***************************************************************************************
+// Contact rules
+// ***************************************************************************************
+cont_contacts = cont outside rv
+all_cont_contacts = all_cont outside rv
+
+cont.1 { @ cont contacts exact size of 1.0
+	not rectangle cont_contacts ==1.0 by ==1.0
+}
+
+cont.2 { @ cont to cont spacing < 1.0
+	ext all_cont_contacts < 1.0 abut < 90 singular
+}
+
+cont.3 { @ sd surround cont < 0.5
+	enc cont_contacts sd < 0.5 abut < 90 overlap outside also singular
+}
+
+#IFNDEF NOWARNINGS
+
+cont.4W { @ single cont connection
+	region1 = sd and gate 
+	//cont interact region1 ==1
+	region1 interact cont ==1
+}
+
+#ENDIF
+
+conttext.1 { @ conttext to any layer spacing < 3.0
+	ext conttext all_except_conttext < 3.0 abut < 90 singular overlap
+}
+
+conttext.2 { @ any layer not allowed on conttext
+	conttext and all_except_conttext
+}
+
+fillcont.1 { @ Unauthorised use of fillcont
+	chip = extent drawn original
+	fillcont interact chip  	
+}
+
+nofillcont.1 { @ Unauthorised use of nofillcont
+	chip = extent drawn original
+	nofillcont interact chip 	
+}
+
+nofillcont.2 { @ fillcont not allowed on nofillcont
+	fillcont and nofillcont
+}
+
+// ***************************************************************************************
+// Gate rules
+// ***************************************************************************************
+
+gatetext.1 { @ gatetext to any layer spacing < 3.0
+	ext gatetext all_except_gatetext < 3.0 abut < 90 singular overlap
+}
+
+gatetext.2 { @ any layer not allowed on gatetext
+	gatetext and all_except_gatetext
+}
+fillgate.1 { @ Unauthorised use of fillgate
+	chip = extent drawn original
+	fillgate interact chip 	
+}
+
+nofillgate.1 { @ Unauthorised use of nofillgate
+	chip = extent drawn original
+	nofillgate interact chip 	
+}
+
+nofillgate.2 { @ fillgate not allowed on nofillgate
+	fillgate and nofillgate
+}
+
+nogate.1 { @ Unauthorised use of nogate
+	chip = extent drawn original
+	nogate interact chip
+}
+
+nogate.2 { @ gate,gatetext not allowed on nogate 
+	nogate and (gate or gatetext)	
+
+}
+
+gate.1 { @ gate width routing < 2.0
+	tmp = size semi by 2.0
+	gate_route = gate not tmp
+	gate_route_edge = not coin edge gate_route tmp
+	int gate_route_edge < 2.0 abut < 90 
+	//int ( gate not (size semi by 2.0)) < 2.0 abut < 90 singular
+}
+
+gate.2 { @ gate to gate spacing < 3.0
+	ext gate < 3.0 abut < 90 singular
+}
+
+gate.3 { @ gate extension beyond tft length < 0.075
+	enc (semi not sd) gate < 0.075 abut < 90 overlap outside also singular
+}
+
+gate.4 { @ gate extension beyond tft width < 0.5
+	enc ( semi outside edge sd ) gate < 0.5 opposite
+}
+
+gate.5 { @ gate to res spacing < 0.5
+	ext gate res < 0.5 abut < 90 singular overlap
+}
+
+gate.6 { @ gate to semi spacing < 0.5
+	ext gate semi < 0.5 abut < 90 
+	
+}
+
+gate.7 { @ gate surround cont < 0.5
+	enc cont_contacts gate < 0.5 abut < 90 overlap outside also singular
+}
+
+gate.8 { @ gate not allowed on res
+	gate and res
+}
+
+gate.9 {@ gate width inside tran < 0.75
+	tmp = semi size by 2.0 inside of tmp3
+	tmp3 = gate with width < 2.0 
+	tmp1 =  size tmp by 0.75  inside of gate
+	gate_route = gate and tmp1
+	gate_route_edge = not inside edge  tmp1 gate
+	int gate_route_edge < 0.75 abut < 90 
+}
+
+gate.10 { @ length of gate at minimum width outside semi region > 2.0
+	tmp = gate with width == 0.75
+	tmp not (size semi by 2.0)
+}
+
+gate.11 { @ max length of gate at min width > 200.0
+ 	length (gate not (size gate by 1.0 underover)) > 200.0
+}
+
+gate.12 { @ min width for long lines < 4.0
+  	int (length gate > 200.0) < 4.0 abut < 90 
+}
+
+
+#IFNDEF NOWARNINGS
+
+gate.16W { @ gap width < 6.0 for gate with width > 30
+	wide_gate = (not touch gate gate_holes) with width >= 30
+	ext wide_gate < 6.0 abut < 90 singular
+}
+
+gate.17W { @ gate I/O width <= 2.0
+	IO_gate = interact gate rv
+	int (IO_gate not (size semi by 2.0)) <= 2.0 abut < 90 singular
+}
+
+gate.18W { @ gate length between cont or via pinning > 750.0
+	via_area = size (cont or via1) by 50.0 inside of gate step 1.0
+	gate_line_section = gate not via_area
+	length gate_line_section > 750.0
+}
+
+#ENDIF
+
+
+// ***************************************************************************************
+// CAPID rules
+// ***************************************************************************************
+capid.1 { @ capid surround gate < 0.0
+	capid not touch edge gate
+	//enc (gate and capid) capid < 0.0
+}
+
+capid.2 { @ sd surround gate in capid < 0.5
+	enc ( (sd and gate) and capid ) sd < 0.5
+}
+
+// **************************************************************************************
+// Via1 rules
+// ***************************************************************************************
+via1.1 { @ via1 contacts exact size of 1.5
+	not rectangle via1 ==1.5 by ==1.5
+}
+
+via1.2 { @ via1 to via1 spacing < 1.5
+	ext via1 < 1.5 abut < 90 singular
+}
+
+via1.3 { @ gate surround via1 < 0.75
+	enc via1 gate < 0.75 abut < 90 overlap outside also singular
+}
+
+via1.4 { @ via1 to semi spacing < 3.0
+	ext via1 semi < 3.0 abut < 90 singular overlap
+}
+
+via1.5 { @ via1 to res spacing < 3.0
+	ext via1 res < 3.0 abut < 90 singular overlap
+}
+
+via1.7 { @ via1 not allowed on sd edge
+	sd inside edge via1
+}
+
+via1.8 { @ via1 to sd spacing < 1.0
+	out1 = ext via1 sd < 1.0 abut < 90  singular overlap region
+	out2 = enc (via1 and sd) sd < 1.0 abut < 90 overlap outside also singular region
+	or out1 out2
+}
+
+via1.9 { @ stacked cont-via1 not centered
+	tmp = size cont_contacts by 0.25
+	tmp2 = tmp or via1 
+	not rectangle tmp2 ==1.5 by ==1.5
+}
+
+via1text.1 { @ via1text to any layer spacing < 3.0
+	ext via1text all_except_via1text < 3.0 abut < 90 singular overlap
+}
+
+via1text.2 { @ any layer not allowed on via1text
+	via1text and all_except_via1text
+}
+
+#IFNDEF NOWARNINGS
+
+via1.10W { @ single via1 connection
+	region1 = gate and mt1
+	//via1 interact region1 ==1
+	region1 interact via1 ==1
+}
+
+#ENDIF
+
+fillvia1.1 { @ Unauthorised use of fillvia1
+	chip = extent drawn original
+	fillvia1 interact chip 	
+}
+
+nofillvia1.1 { @ Unauthorised use of nofillvia1
+	chip = extent drawn original
+	nofillvia1 interact chip 	
+}
+
+nofillvia1.2 { @ fillvia1 not allowed on nofillvia1
+	fillvia1 and nofillvia1
+}
+
+// ***************************************************************************************
+// MT1 rules
+// ***************************************************************************************
+
+mt1text.1 { @ mt1text to any layer spacing < 3.0
+	ext mt1text all_except_mt1text < 3.0 abut < 90 singular overlap
+}
+
+mt1text.2 { @ any layer not allowed on mt1text
+	mt1text and all_except_mt1text
+}
+
+fillmt1.1 { @ Unauthorised use of fillmt1
+	chip = extent drawn original
+	fillmt1	interact chip  
+}
+
+nofillmt1.1 { @ Unauthorised use of nofillmt1
+	chip = extent drawn original
+	nofillmt1 interact chip 
+}
+
+nofillmt1.2 { @ fillmt1 not allowed on nofillmt1
+	fillmt1 and nofillmt1
+}
+
+nomt1.1 { @ Unauthorised use of nomt1
+	chip = extent drawn original
+	nomt1 interact chip	
+}
+
+nomt1.2 { @ mt1,mt1text not allowed on nomt1
+	nomt1 and (mt1 or mt1text)	
+
+}
+
+mt1.1 { @ mt1 width < 3.0
+	int mt1 < 3.0 abut < 90 singular
+}
+
+#IFNDEF NOWARNINGS
+
+mt1.1W { @ mt1 width < 4.0
+	int mt1 < 4.0 abut < 90 singular
+}
+
+#ENDIF
+
+mt1.2 { @ mt1 to mt1 spacing < 2.0
+	ext mt1 < 2.0 abut < 90 singular
+}
+
+mt1.3 { @ mt1 surround via1 < 1.0
+	enc via1 mt1 < 1.0 abut < 90 overlap outside also singular
+}
+
+mt1.4 { @ max length of mt1 at min width > 100.0
+  length (mt1 not (size mt1 by 1.5 underover)) > 100.0
+}
+
+mt1.5 { @ min width for long lines < 4.0
+  int (length mt1 > 100.0) < 4.0 abut < 90 
+}
+
+#IFNDEF NOWARNINGS
+
+mt1.6W { @ gap width < 6.0 for mt1 with width >= 30.0
+	wide_mt1 = (not touch mt1 mt1_holes) with width >= 30.0
+	ext wide_mt1 < 6.0 abut < 90 singular
+}
+
+mt1.7W { @ mt1 I/O width <= 3.0
+	IO_mt1 = interact mt1 rv
+	int IO_mt1 <= 3.0 abut < 90 singular
+}
+
+mt1.8W { @ mt1 length between via1 or via2 pinning > 750.0
+	via_area = size (via1 or via2) by 50.0 inside of mt1 step 1.0
+	mt1_line_section = mt1 not via_area
+	length mt1_line_section > 750.0
+}
+
+#ENDIF
+
+
+// ***************************************************************************************
+// Via2 rules
+// ***************************************************************************************
+via2.1 { @ via2 contacts exact minimum size and maximum size of 1.5 and 2.0
+	(not rectangle (via2  not interact via1) ==1.5 by ==1.5) and (not rectangle (via2 not interact via1) ==2.0 by ==2.0)
+}
+
+via2.2 { @ via2 to via2 spacing < 1.5
+	ext via2 < 1.5 abut < 90 singular
+}
+
+via2.3 { @ mt1 surround via2 < 1.0
+	enc via2 mt1 < 1.0 abut < 90 overlap outside also singular
+}
+
+via2.4 { @ via1 to via2 spacing < 2.0
+	ext via1 via2 < 2.0 abut < 90 singular overlap
+}
+
+via2.9 { @ stacked via1-via2 not centered
+	tmp = size via1 by 0.25
+	tmp2 = tmp or(via2 interact via1)
+	not rectangle tmp2 == 2.0  by == 2.0
+}
+
+fillvia2.1 { @ Unauthorised use of fillvia2
+	chip = extent drawn original
+	fillvia2 interact chip 	
+}
+
+nofillvia2.1 { @ Unauthorised use of nofillvia2
+	chip = extent drawn original
+	nofillvia2 interact chip 	
+}
+
+nofillvia2.2 { @ fillvia2 not allowed on nofillvia2
+	fillvia2 and nofillvia2
+}
+
+
+
+via2.7 { @ via2 exact size stacked on via1 2.0
+	not rectangle ((via2 interact via1) not rv) ==2.0 by ==2.0
+}
+
+
+via2text.1 { @ via2text to any layer spacing < 3.0
+	ext via2text all_except_via2text < 3.0 abut < 90 singular overlap
+}
+
+via2text.2 { @ any layer not allowed on via2text
+	via2text and all_except_via2text
+}
+
+#IFNDEF NOWARNINGS
+
+via2.10W { @ single via2 connection
+	region1 = mt2 and mt1
+	//via2 interact region1 ==1
+	region1 interact via2  ==1
+}
+
+#ENDIF
+
+// ***************************************************************************************
+// MT2 rules
+// ***************************************************************************************
+
+mt2text.1 { @ mt2text to any layer spacing < 3.0
+	ext mt2text all_except_mt2text < 3.0 abut < 90 singular overlap
+}
+
+mt2text.2 { @ any layer not allowed on mt2text
+	mt2text and all_except_mt2text
+}
+
+fillmt2.1 { @ Unauthorised use of fillmt2
+	chip = extent drawn original
+	fillmt2	interact chip 
+}
+
+nofillmt2.1 { @ Unauthorised use of nofillmt2
+	chip = extent drawn original
+	nofillmt2 interact chip 
+}
+
+nofillmt2.2 { @ fillmt2 not allowed on nofillmt2
+	fillmt2 and nofillmt2
+}
+nomt2.1 { @ Unauthorised use of nomt2
+	chip = extent drawn original
+	nomt2 interact chip	
+}
+
+nomt2.2 { @ mt2,mt2text not allowed on nomt2
+	nomt2 and (mt2 or mt2text)	
+
+}
+
+mt2.1 { @ mt2 width < 3.0
+	int (mt2 not lfuseid) < 3.0 abut < 90 singular
+}
+
+#IFNDEF NOWARNINGS
+
+mt2.1W { @ mt2 width < 4.0
+	int (mt2 not lfuseid) < 4.0 abut < 90 singular
+}
+
+#ENDIF
+
+mt2.2 { @ mt2 to mt2 spacing < 2.0
+	ext mt2 < 2.0 abut < 90 singular
+}
+
+mt2.3 { @ mt2 surround via2 < 1.0
+	enc via2 mt2 < 1.0 abut < 90 overlap outside also singular
+}
+
+mt2.4 { @ max length of mt2 at min width > 100.0
+	length (mt2 not (size mt2 by 1.5 underover)) > 100.0
+}
+
+mt2.5 { @ min width for long lines < 4.0
+	int (length mt2 > 100.0) < 4.0
+}
+
+#IFNDEF NOWARNINGS
+
+mt2.6W { @ gap width < 6.0 for metal with width >= 30.0
+	wide_mt2 = (not touch mt2 mt2_holes) with width >= 30.0
+	ext wide_mt2 < 6.0 abut < 90 singular
+}
+
+mt2.7W { @ mt2 I/O width <= 3.0
+	IO_mt2 = interact mt2 rv
+	int IO_mt2 <= 3.0 abut < 90 singular
+}
+
+mt2.8W { @ mt2 length between via2 or rv pinning > 750.0
+	via_area = size (via2 or rv) by 50.0 inside of mt2 step 1.0
+	mt2_line_section = mt2 not via_area
+	length mt2_line_section > 750.0
+}
+
+#ENDIF
+
+
+// ***************************************************************************************
+// RV rules
+// ***************************************************************************************
+
+rv.1 { @ rv width < 20.0
+	int rv < 20.0 abut < 90 singular
+}
+
+rv.2 { @ rv to rv spacing < 20.0
+	ext rv < 20.0 abut < 90 singular
+}
+
+rv.3 { @ mt2 surround rv < 6.0
+	enc rv mt2 < 6.0 abut < 90 overlap outside also singular
+}
+
+rvtext.1 { @ rvtext to any layer spacing < 3.0
+	ext rvtext all_except_rvtext < 3.0 abut < 90 singular overlap
+}
+
+rvtext.2 { @ any layer not allowed on rvtext
+	rvtext and all_except_rvtext
+}
+
+fillrv.1 { @ Unauthorised use of fillrv
+	chip = extent drawn original
+	fillrv interact chip  
+}
+
+nofillrv.1 { @ Unauthorised use of nofillrv
+	chip = extent drawn original
+	nofillrv interact chip 	
+}
+
+nofillrv.2 { @ fillrv not allowed on nofillrv
+	fillrv and nofillrv
+}
+
+
+
+// ***************************************************************************************
+// RDL rules
+// ***************************************************************************************
+
+rdl.1 { @ rdl width < 30.0
+	int rdl < 30.0 abut < 90 singular
+}
+
+rdl.2 { @ rdl to rdl spacing < 6.0
+	ext rdl < 6.0 abut < 90 singular
+}
+
+rdl.3 { @ rdl surround rv < 12.0
+	enc rv rdl < 12.0 abut < 90 overlap outside also singular
+}
+
+#IFNDEF NOWARNINGS
+
+rdl.4W { @ rdl length between via2 pinning > 750.0
+	via_area = size rv by 50.0 inside of rdl step 1.0
+	rdl_line_section = rdl not via_area
+	length rdl_line_section > 750.0
+}
+
+#ENDIF
+
+rdl.5 { @ rdl not allowed on lfuseid
+	rdl and lfuseid
+}
+
+
+rdltext.1 { @ rdltext to any layer spacing < 6.0
+	ext rdltext all_except_rdltext < 6.0 abut < 90 singular overlap
+}
+
+rdltext.2 { @ any layer not allowed on rdltext
+	rdltext and all_except_rdltext
+}
+
+fillrdl.1 { @ Unauthorised use of fillrdl
+	chip = extent drawn original
+	fillrdl	interact chip 
+}
+
+nofillrdl.1 { @ Unauthorised use of nofillrdl
+	chip = extent drawn original
+	nofillrdl interact chip 
+}
+
+nofillrdl.2 { @ fillrdl not allowed on nofillrdl
+	fillrdl and nofillrdl
+}
+nordl.1 { @ Unauthorised use of nordl
+	chip = extent drawn original
+	nordl interact chip
+}
+
+nordl.2 { @ rdl,rdltext not allowed on nordl
+	nordl and (rdl or rdltext)	
+
+}
+
+// ***************************************************************************************
+// Metal resistors rules
+// ***************************************************************************************
+met_all  = or sd gate mt1 mt2 rdl
+
+residsd.1 { @ residsd not inside metal sd layer
+	residsd not inside sd
+}
+
+residgate.1 { @ residgate not inside metal gate layer
+	residgate not inside gate
+}
+
+residmt1.1 { @ residmt1 not inside metal mt1 layer
+	residmt1 not inside mt1
+}
+
+residmt2.1 { @ residmt2 not inside metal mt2 layer
+	residmt2 not inside mt2
+}
+
+residrdl.1 { @ residrdl not inside metal rdl layer
+	residrdl not inside rdl
+}
+
+// ***************************************************************************************
+// LFUSEID rules
+// ***************************************************************************************
+
+lfuseid.1 { @ length of mt2 within lfuseid area != 16.0
+	//not length ((lfuseid and mt2) not all_except_mt2) == 16.0
+	temp = (lfuseid and mt2) not all_except_mt2
+	not rectangle temp == 2.0 by == 16.0
+	
+}
+
+lfuseid.2 { @  width of mt2 within lfuseid area != 2.0
+	//((lfuseid and mt2) not all_except_mt2) with width != 2.0
+	temp = (lfuseid and mt2) not all_except_mt2
+	not rectangle temp == 2.0 by == 16.0
+}
+
+lfuseid.3 { @ lfuseid blast zone exact size != 13.0 x 16.0
+	not rectangle lfuseid == 13.0 by == 16.0
+}
+
+lfuseid.4 { @ lfuseid blast zone exact size != 13.0 x 16.0
+	not rectangle lfuseid == 13.0 by == 16.0
+}
+
+lfuseid.5 { @ minimum lfuseid area extension beyond mt2 laser fuse 5.5
+	enc mt2 lfuseid < 5.5 abut < 90 singular opposite
+}
+
+#IFNDEF NOWARNINGS
+
+lfuseid.6W { @ only mt2 laser fuse is allowed in lfuseid area
+	lfuseid and all_except_mt2
+}
+
+#ENDIF
+
+lt.1 { @ laser alignment target dimension != 6.0 x 22.0
+	not rectangle lfusealignmt2 == 6.0 by == 22.0
+}
+
+lt.2 { @ laser alignment target dimension != 6.0 x 22.0
+	not rectangle lfusealignmt2 == 6.0 by == 22.0
+}
+
+lt.3 { @ lfusealignid extension beyond lfusealignmt2 long edge 27.0
+	temp = length lfusealignmt2 == 22.0
+	enc temp lfusealignid < 27.0 abut < 90 opposite
+}
+
+
+lt.4 { @ lfusealignid extension beyond lfusealignmt2 short edge 0.0
+	lfusealignmt2 not lfusealignid   
+}
+
+
+lt.5 { @ maximum rectilinear distance of lfusealignmt2 to mt2 2000.0
+	temp = lfusealignmt2 size by 2000.0
+	not interact temp mt2 
+}
+
+lt.6 { @ only lfusealignmt2 allowed in lfusealignid
+	lfusealignid and all_except_lfusealignmt2
+}
+
+lt.7 { @ minimum lfusealignid spacing to any layer < 3.0
+	ext lfusealignid all < 3.0 abut < 90 singular
+}
+
+
+// ***************************************************************************************
+// RBOUND rules
+// ***************************************************************************************
+
+rbound.1 { @ other layers(except dice layer) not allowed in rbound
+	  rbound and all
+}
+
+
+// ***************************************************************************************
+// Dice line
+// This is represented by a dice arc
+// These rules are only valid at chip level
+// ***************************************************************************************
+
+dice.1 { @ dice width != 100.0
+	out1 = int dice < 100.0 abut < 90 singular region
+	out2 = size (size dice by -50.0) by 50.0
+	or out1 out2
+}
+
+dice.2 { @ any layer not allowed on dice
+	(interact all dice) and dice
+}
+
+dice.3 { @ dice spacing to layer not touching rv < 50.0
+	all_except_text_or_fillsd = all not (all_text or fillsd)
+	ext (not interact all_except_text_or_fillsd dice) dice < 50.0 abut < 90 singular
+}
+
+
+// ***************************************************************************************
+// LAYER DENSITY rules
+// ***************************************************************************************
+
+dens.1 { @ Maximum global metal density in all metals 50%
+	density all_sd > 0.5	print all_sd.dens.info.log 
+	density all_gate > 0.5	print all_gate.dens.info.log 
+	density all_mt1 > 0.5	print all_mt1.dens.info.log 
+	density all_mt2 > 0.5	print all_mt2.dens.info.log
+	density all_rdl > 0.5	print all_rdl.dens.info.log  
+}
+
+
+denssd.1 { @ maximum local density of sd when width >= 25um is 75%
+	temp1 = sd size by 1.5 overunder
+	temp2 = temp1 size by 12.495 underover
+	temp3 = (temp2 and sd) not interact capid
+	density temp3 > 0.75 window 12 12 step 6  print sd12.local.dens.info.log 
+}
+
+densgate.1 { @ maximum local density of gate when width >= 25um is 75%
+	temp1 = gate size by 1.5 overunder
+	temp2 = temp1 size by 12.495 underover
+	temp3 = (temp2 and gate) not interact capid
+	density temp3 > 0.75 window 12 12 step 6 print gate12.local.dens.info.log 
+}
+
+
+// ***************************************************************************************
+// Densities
+// ***************************************************************************************
+
+#IFDEF DENS
+
+// Dummy rules to monitor layer densities
+
+all_res.dens.i { @ res density information
+	density res <= 1.00 print res.dens.info.log
+}
+
+all_semi.dens.i { @ semi density information
+	density semi <= 1.00 print semi.dens.info.log
+}
+
+all_sd.dens.i { @ sd density information
+	density all_sd <= 1.00 print sd.dens.info.log
+}
+
+sd.local.dens.i { @ sd local density information
+	density all_sd <= 1.00 window 1000 1000 step 500   print sd1000.local.dens.info.log
+	density all_sd <= 1.00 window  200  200 step 100   print sd200.local.dens.info.log
+	density all_sd <= 1.00 window  100  100 step  50   print sd100.local.dens.info.log
+	density all_sd <= 1.00 window   50   50 step  25   print sd50.local.dens.info.log
+	density all_sd <= 1.00 window   25   25 step  12.5 print sd25.local.dens.info.log
+}
+
+all_cont.dens.i { @ cont density information
+	density all_cont <= 1.00 print cont.dens.info.log
+}
+
+all_gate.dens.i { @ gate density information
+	density all_gate <= 1.00 print gate.dens.info.log
+}
+
+gate.local.dens.i { @ gate local density information
+	density all_gate <= 1.00 window 1000 1000 step 500   print gate1000.local.dens.info.log
+	density all_gate <= 1.00 window  200  200 step 100   print gate200.local.dens.info.log
+	density all_gate <= 1.00 window  100  100 step  50   print gate100.local.dens.info.log
+	density all_gate <= 1.00 window   50   50 step  25   print gate50.local.dens.info.log
+	density all_gate <= 1.00 window   25   25 step  12.5 print gate25.local.dens.info.log
+}
+
+all_via1.dens.i { @ via1 density information
+	density all_via1 <= 1.00 print via1.dens.info.log
+}
+
+all_mt1.dens.i { @ mt1 density information
+	density all_mt1 <= 1.00 print mt1.dens.info.log
+}
+
+all_via2.dens.i { @ via2 density information
+	density all_via2 <= 1.00 print via2.dens.info.log
+}
+
+all_mt2.dens.i { @ mt2 density information
+	density all_mt2 <= 1.00 print mt2.dens.info.log
+}
+
+all_rv.dens.i { @ pass density information
+	density all_rv <= 1.00 print rv.dens.info.log
+}
+
+pad2.dens.i { @ pass density information
+	density pad2 <= 1.00 print pad2.dens.info.log
+}
+
+
+all_rdl.dens.i { @ pass density information
+	density all_rdl <= 1.00 print rdl.dens.info.log
+}
+
+
+#ENDIF
+
+// ***************************************************************************************
+// END OF RULES FILE
+// ***************************************************************************************
+

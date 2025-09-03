@@ -1,0 +1,416 @@
+// ***************************************************************************************
+
+title "yod PEX V2.1.0.beta.2.hotfix.1 "
+
+
+
+
+// ***************************************************************************************
+// Setup
+// ***************************************************************************************
+
+precision	1000
+resolution	25
+unit length	u
+
+flag skew yes
+flag offgrid yes
+drc tolerance factor 0.001
+
+
+exclude cell "label*"
+
+// ***************************************************************************************
+// Layers
+// ***************************************************************************************
+
+
+// Actual layers
+layer	sd		1
+layer	sdtext		101
+layer	fillsd		401
+layer	nofillsd	441
+layer	nosd		501
+layer	semi		2
+layer	semitext	102
+layer	fillsemi	402
+layer	nofillsemi	442
+layer	res		802
+layer	restext		852
+layer	fillres		812
+layer	nofillres	842
+layer	cont		3
+layer	conttext	103
+layer	fillcont	403
+layer	nofillcont	443
+layer	gate		4
+layer	gatetext	104
+layer	fillgate	404
+layer	nofillgate	444
+layer	nogate		504
+layer	mt0		5
+layer	via1		6
+layer	via1text	106
+layer	fillvia1	406
+layer	nofillvia1	446
+layer	mt1		7
+layer	mt1text		107
+layer	fillmt1		407
+layer	nofillmt1	447
+layer	nomt1		507
+layer	via2		8
+layer	via2text	108
+layer	fillvia2	408
+layer	nofillvia2	448
+layer	mt2		9
+layer	mt2text		109
+layer	fillmt2		409
+layer	nofillmt2	449
+layer	nomt2		509
+layer	rv		10
+layer	rvtext		110
+layer	fillrv		410
+layer	nofillrv	450
+layer	rdl		15
+layer	rdltext		115
+layer	fillrdl		415
+layer	nofillrdl	455
+layer	nordl		515
+layer	pad2		16
+layer	lfusealignid	129
+layer 	lfusealignmt2	559
+
+
+
+
+layer	capid		120
+layer	capid2		128
+layer	residsd		122
+layer	residgate	124
+layer	residmt1	125
+layer	residmt2	126
+layer	residrdl	127
+layer	lfuseid		123
+layer	dice		130
+layer	rbound		131
+
+
+
+// ***************************************************************************************
+// Rules
+// ***************************************************************************************
+
+lvs power name vd vdd
+lvs ground name vs vss ground
+lvs reduce parallel mos no
+lvs reduce series mos no
+lvs reduce semi series mos no
+lvs filter unused mos no
+lvs recognize gates all
+lvs component type property element
+lvs component subtype property model
+lvs ignore ports no
+lvs all capacitor pins swappable yes
+
+lvs report mask.lvs.rep
+lvs report option n
+lvs report maximum 50
+mask results database maskdb
+
+text layer sd gate mt1 mt2 rdl
+port layer text sd gate mt1 mt2 rdl
+
+bulk = extent
+
+// ***************************************************************************************
+// Device Recognition
+// ***************************************************************************************
+
+
+nchannel	= (gate and semi) not (size sd by -0.075)
+source_drain	= semi and sd
+
+reslayer	= res not sd
+resterm		= res and sd
+
+cap_sd_gate	= ( capid and sd )    and gate
+
+cap_sd_mt1	= ( capid2 and sd )   and ( mt1 not gate )
+cap_gate_mt1	= ( capid2 and gate ) and mt1
+
+cap_sd_mt2	= ( capid2 and sd )   and ( ( mt2 not gate ) not mt1 )
+cap_gate_mt2	= ( capid2 and gate ) and ( mt2 not mt1 )
+cap_mt1_mt2	= ( capid2 and mt1 )  and mt2
+
+cap_sd_rdl	= ( capid2 and sd )   and ( ( rdl not gate ) not ( mt1 or mt2 ) )
+cap_gate_rdl	= ( capid2 and gate ) and ( ( rdl not mt1 ) not mt2 )
+cap_mt1_rdl	= ( capid2 and mt1 )  and ( rdl not mt2 )
+cap_mt2_rdl	= ( capid2 and mt2 )  and rdl
+
+ressdlayer	= residsd and sd
+ressdterm	= ((size residsd by 1.0) not residsd) and sd
+
+resgatelayer	= residgate and gate
+resgateterm	= ((size residgate by 1.0) not residgate) and gate
+
+resmt1layer	= residmt1 and mt1
+resmt1term	= ((size residmt1 by 1.0) not residmt1) and mt1
+
+resmt2layer	= residmt2 and mt2
+resmt2term	= ((size residmt2 by 1.0) not residmt2) and mt2
+
+resrdllayer	= residrdl and rdl
+resrdlterm	= ((size residrdl by 1.0) not residrdl) and rdl
+
+sdwire		= ((sd or sdtext) not residsd) not capid
+sdwire2		= sd not residsd
+gatewire	= ((gate or gatetext) or fillgate) not residgate
+tmp1		= (gate and semi) not sd
+tmp2		= (size tmp1 by 0.075) and semi
+tmp3 		= (grow tmp2 top by 0.2) not semi
+tmp4 		= (grow tmp2 bottom by 0.2) not semi
+tmp5 		= (grow tmp2 right by 0.2) not semi
+tmp6 		= (grow tmp2 left by 0.2) not semi
+tmp7		= or tmp1 tmp2 tmp3 tmp4 tmp5 tmp6
+gatewire2	= gatewire not tmp7
+mt1wire		= (mt1 or mt1text) not residmt1
+mt2wire		= (mt2 or mt2text) not residmt2
+rdlwire		= (rdl or rdltext) not residrdl
+
+
+// ***************************************************************************************
+// Connections
+// ***************************************************************************************
+
+connect source_drain	sdwire
+connect source_drain	sdtext
+connect source_drain	fillsd
+connect sdwire		sdwire2
+connect sdwire		gatewire	by cont
+connect sdwire		gatewire	by fillcont
+connect gatewire	gatewire2
+connect gatewire	mt1wire		by via1
+connect mt1wire		mt2wire		by via2
+connect mt2wire		rdlwire		by rv
+
+
+connect resterm		sdwire
+
+connect ressdterm	sdwire
+connect resgateterm	gatewire
+connect resmt1term	mt1wire
+connect resmt2term	mt2wire
+connect resrdlterm	rdlwire
+
+
+attach sd sdwire
+attach gate gatewire
+attach mt1 mt1wire
+attach mt2 mt2wire
+attach rdl rdlwire
+
+// ***************************************************************************************
+// Devices
+// ***************************************************************************************
+
+device mn (nch) nchannel gatewire(g) source_drain(s) source_drain(d)
+[
+	property  w, l
+
+	l = (perim(nchannel) - perim_co(nchannel,s) - perim_in(nchannel,s) - perim_co(nchannel,d) - perim_in(nchannel,d) ) * 0.5
+	w = (area(nchannel) - area_com(s,nchannel) - area_com(d,nchannel))/l
+]
+
+// ***************************************************************************************
+
+device r (resmod) reslayer resterm(pos) resterm(neg)
+[
+	property R, L, W
+	res_area = area(reslayer)
+	W = (perim_co(pos, reslayer) + perim_co(neg, reslayer))/2
+	L = res_area/W
+	Nc= bends(reslayer)
+	rsh = 200000 * (100-98e-6*Nc/L)/100
+	R = (L/W)*rsh
+]
+
+device r (rp) ressdlayer ressdterm(pos) ressdterm(neg)
+[
+	property R, L, W
+	res_area = area(ressdlayer)
+	W = (perim_co(pos, ressdlayer) + perim_co(neg, ressdlayer))/2
+	L = res_area/W
+	R = 0.325 * L/W
+]
+
+device r (rp) resgatelayer resgateterm(pos) resgateterm(neg)
+[
+	property R, L, W
+	res_area = area(resgatelayer)
+	W = (perim_co(pos, resgatelayer) + perim_co(neg, resgatelayer))/2
+	L = res_area/W
+	R = 0.325 * L/W
+]
+
+device r (rp) resmt1layer resmt1term(pos) resmt1term(neg)
+[
+	property R, L, W
+	res_area = area(resmt1layer)
+	W = (perim_co(pos, resmt1layer) + perim_co(neg, resmt1layer))/2
+	L = res_area/W
+	R = 0.325 * L/W
+]
+
+device r (rp) resmt2layer resmt2term(pos) resmt2term(neg)
+[
+	property R, L, W
+	res_area = area(resmt2layer)
+	W = (perim_co(pos, resmt2layer) + perim_co(neg, resmt2layer))/2
+	L = res_area/W
+	R = 0.325 * L/W
+]
+
+device r (rp) resrdllayer resrdlterm(pos) resrdlterm(neg)
+[
+	property R, L, W
+	res_area = area(resrdllayer)
+	W = (perim_co(pos, resrdllayer) + perim_co(neg, resrdllayer))/2
+	L = res_area/W
+	R = 0.10 * L/W
+]
+
+// ***************************************************************************************
+
+device c (capmod) cap_sd_gate sdwire2 gatewire
+[
+	property C
+	CA = 0.0027
+	CP = 0
+	C = CA*area(cap_sd_gate) + CP*perim(cap_sd_gate)
+]
+
+device c (capmod) cap_sd_mt1 sdwire mt1wire
+[
+	property C
+	CA = 0.00015
+	CP = 0
+	C = CA*area(cap_sd_mt1) + CP*perim(cap_sd_mt1)
+]
+
+device c (capmod) cap_sd_mt2 sdwire mt2wire
+[
+	property C
+	CA = 0.00008
+	CP = 0
+	C = CA*area(cap_sd_mt2) + CP*perim(cap_sd_mt2)
+]
+
+device c (capmod) cap_sd_rdl sdwire rdlwire
+[
+	property C
+	CA = 0.00004
+	CP = 0
+	C = CA*area(cap_sd_rdl) + CP*perim(cap_sd_rdl)
+]
+
+device c (capmod) cap_gate_mt1 gatewire mt1wire
+[
+	property C
+	CA = 0.00015
+	CP = 0
+	C = CA*area(cap_gate_mt1) + CP*perim(cap_gate_mt1)
+]
+
+device c (capmod) cap_gate_mt2 gatewire mt2wire
+[
+	property C
+	CA = 0.00008
+	CP = 0
+	C = CA*area(cap_gate_mt2) + CP*perim(cap_gate_mt2)
+]
+
+device c (capmod) cap_gate_rdl gatewire rdlwire
+[
+	property C
+	CA = 0.00004
+	CP = 0
+	C = CA*area(cap_gate_rdl) + CP*perim(cap_gate_rdl)
+]
+
+device c (capmod) cap_mt1_mt2 mt1wire mt2wire
+[
+	property C
+	CA = 0.00018
+	CP = 0
+	C = CA*area(cap_mt1_mt2) + CP*perim(cap_mt1_mt2)
+]
+
+device c (capmod) cap_mt1_rdl mt1wire rdlwire
+[
+	property C
+	CA = 0.00005
+	CP = 0
+	C = CA*area(cap_mt1_rdl) + CP*perim(cap_mt1_rdl)
+]
+
+device c (capmod) cap_mt2_rdl mt2wire rdlwire
+[
+	property C
+	CA = 0.00006
+	CP = 0
+	C = CA*area(cap_mt2_rdl) + CP*perim(cap_mt2_rdl)
+]
+
+
+// ***************************************************************************************
+// Trace Properties
+// ***************************************************************************************
+
+trace property r(resmod)	w w 0
+trace property r(resmod)	l l 0.1
+trace property c(capmod)	c c 2
+trace property mn(nch)		w w 0
+trace property mn(nch)		l l 0
+
+// ***************************************************************************************
+// Simple Parasitics
+// ***************************************************************************************
+
+// Simulation models already account for the SD-GATE overlap capacitance
+
+capacitance order sdwire2 sdwire gatewire2 gatewire mt1wire mt2wire rdlwire
+
+// Where, oh where, is the description of these blasted things???
+// Supposed to use xcalibrate to generate these things
+
+capacitance crossover plate gatewire2 sdwire       [0.0027]
+capacitance crossover plate mt1wire   sdwire       [0.00015]
+capacitance crossover plate mt2wire   sdwire       [0.00008]
+capacitance crossover plate rdlwire   sdwire       [0.00004]
+
+capacitance crossover plate mt1wire   gatewire     [0.00015]
+capacitance crossover plate mt2wire   gatewire     [0.00008]
+capacitance crossover plate rdlwire   gatewire     [0.00004]
+
+capacitance crossover plate mt2wire   mt1wire      [0.00018]
+capacitance crossover plate rdlwire   mt1wire      [0.00005]
+
+capacitance crossover plate rdlwire   mt2wire      [0.00006]
+
+resistance sheet sdwire   [0.325 0]
+resistance sheet gatewire [0.325 0]
+resistance sheet mt1wire  [0.325 0]
+resistance sheet mt2wire  [0.325 0]
+resistance sheet rdlwire  [0.10 0]
+
+
+// R = (n1/contact_area) + (n2/contact_perimeter) [um]
+// CONT = 2 ohm
+// VIA1 = 2 ohm
+// VIA2 = 2 ohm
+// RV  = 2 ohm
+resistance connection sdwire   gatewire [2.0 0]
+resistance connection gatewire mt1wire  [4.5 0]
+resistance connection mt1wire  mt2wire  [4.5 0]
+resistance connection mt2wire  rdlwire  [800.0 0]
+

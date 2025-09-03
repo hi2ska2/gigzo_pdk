@@ -1,0 +1,37 @@
+* simulator lang=spectre
+
+* R(inst) = Rsh * (L - 2 * etchl) / (W - 2 * etch)
+* R(T) = R(tnom) * [ 1 + tc1*(T-tnom) + tc2*(T-tnom)^2 ]
+* where T = trise(inst)+temp
+* Rsh Min: 150k, Nom:200k, Max:250k to scaler is 0.75, 1, 1.25
+
+library resmod
+
+  section nom
+  model resmod resistor rsh=200000 etch=0u etchl=0u tc1=-0.005622713 tc2=0 tnom=25 scaler=1
+  model ressd resistor rsh=0.325 tnom=25 scaler=1
+  model resgate resistor rsh=0.325 tnom=25 scaler=1
+  model resmt1 resistor rsh=0.325 tnom=25 scaler=1
+  model resmt2 resistor rsh=0.325 tnom=25 scaler=1
+  model resrdl resistor rsh=0.1 tnom=25 scaler=1
+  endsection nom
+
+  section min
+  model resmod resistor rsh=200000 etch=0u etchl=0u tc1=-0.004530871 tc2=0 tnom=25 scaler=0.75
+  model ressd resistor rsh=0.325 tnom=25 scaler=0.615
+  model resgate resistor rsh=0.325 tnom=25 scaler=0.615
+  model resmt1 resistor rsh=0.325 tnom=25 scaler=0.615
+  model resmt2 resistor rsh=0.325 tnom=25 scaler=0.615
+  model resrdl resistor rsh=0.1 tnom=25 scaler=1
+  endsection min
+
+  section max
+  model resmod resistor rsh=200000 etch=0u etchl=0u tc1=-0.006136748 tc2=0 tnom=25 scaler=1.25
+  model ressd resistor rsh=0.325 tnom=25 scaler=1.385
+  model resgate resistor rsh=0.325 tnom=25 scaler=1.385
+  model resmt1 resistor rsh=0.325 tnom=25 scaler=1.385
+  model resmt2 resistor rsh=0.325 tnom=25 scaler=1.385
+  model resrdl resistor rsh=0.1 tnom=25 scaler=1
+  endsection max
+
+library resmod

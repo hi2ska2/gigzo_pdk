@@ -1,0 +1,9 @@
+DEFINE analogLib $(compute:THIS_TOOL_INST_ROOT)/tools/dfII//etc/cdslib/artist/analogLib
+DEFINE basic $(compute:THIS_TOOL_INST_ROOT)/tools/dfII/etc/cdslib/basic
+DEFINE sheets $(compute:THIS_TOOL_INST_ROOT)/tools/dfII/etc/cdslib/sheets/US_8ths
+
+DEFINE pragLib /home/jsw2277/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk/cdslib/pragLib
+DEFINE lib_common /home/jsw2277/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk/cdslib/lib_common
+DEFINE avTech /tools/CADENCE/ASSURA415/tools.lnx86/assura/etc/avtech/avTech
+DEFINE 6T1C_jsw /home/jsw2277/IGZO_PDK/6T1C_jsw
+DEFINE nch_test /home/jsw2277/IGZO_PDK/nch_test
