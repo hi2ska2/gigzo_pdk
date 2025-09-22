@@ -6,11 +6,11 @@
 LockStakeVersion               1.1
 LoginName                      jsw2277
 HostName                       sdslcalc1
-ProcessIdentifier              55516
-ProcessCreationTime_UTC        1756186824
-ProcessCreationTime_Readable   Tue Aug 26 14:40:24 2025 KST
+ProcessIdentifier              93799
+ProcessCreationTime_UTC        1756958994
+ProcessCreationTime_Readable   Thu Sep  4 13:09:54 2025 KST
 AppIdentifier                  OA File System Design Manager
 OSType                         unix
 ReasonForPlacingEditLock       OpenAccess edit lock
-FilePathUsedToEditLock         /home/jsw2277/IGZO_PDK/nch_test/nch_modified/schematic/sch.oa.cdslck
-TimeEditLocked                 Thu Sep 18 15:02:58 2025 KST
+FilePathUsedToEditLock         /home/jsw2277/IGZO_PDK/nch_test/nch_bsimsoi_test/schematic/sch.oa.cdslck
+TimeEditLocked                 Thu Sep  4 13:10:16 2025 KST

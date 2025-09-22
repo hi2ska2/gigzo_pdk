@@ -1,0 +1,56 @@
+(nch
+	(pragLib nch symbol)
+	(
+		(d D)
+		(g G)
+		(s S)
+	)
+	(
+		(w w)
+		(l l)
+	)
+)
+
+(res
+	(pragLib res symbol)
+	(
+		(PLUS)
+		(MINUS)
+	)
+	(
+		(r r)
+		(w w)
+		(l l)
+	)
+)
+
+(cap
+	(pragLib cap symbol)
+	(
+		(PLUS)
+		(MINUS)
+	)
+	(
+		(c c)
+		(w w)
+		(l l)
+	)
+)
+
+(
+	(p cap c)
+	(analogLib cap symbol)
+	(
+		(PLUS)
+		(MINUS)
+	)
+)
+
+(
+	(p res r)
+	(analogLib res symbol)
+	(
+		(PLUS)
+		(MINUS)
+	)
+)

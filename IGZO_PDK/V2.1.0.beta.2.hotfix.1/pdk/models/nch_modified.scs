@@ -7,8 +7,8 @@ library nch_modified
 
 
 section typ
-parameters dvfbo=-0.237
-parameters duo=0.0153637
+parameters dvfbo=-0.407
+parameters duo=0.01837
 
 #parameters dvfbo=-0.0227012
 #parameters duo=0.0120637

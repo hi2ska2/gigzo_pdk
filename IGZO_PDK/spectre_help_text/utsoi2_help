@@ -1,0 +1,740 @@
+
+*************
+Device utsoi2
+*************
+
+utsoi2 model (For more information, please refer to utsoi2 model manual or
+contact info@cadence.com )
+Model parameter "version" only accepts real number value, like 2.00 for
+version=2.0.0. The available versions are 2.00(2.0.0), 2.10(2.1.0),
+2.11(2.1.1), 2.20(2.2.0)
+This device is supported within altergroups.
+
+Synopsis:
+Name ( d g s b [Tnode] ) ModelName <parameter=value> ...
+
+Model Synopsis:
+model ModelName utsoi2 <parameter=value> ...
+
+
+===================
+Instance Parameters
+===================
+
+1       l=1.0e-6          Channel length(m).
+2       w=1.0e-6          Channel width(m).
+3       asource=1.0e-12   Source region area (m^2).
+4       adrain=1.0e-12    Drain region area (m^2).
+5       psource=1.0e-6    Source region perimeter (m).
+6       pdrain=1.0e-6     Drain region perimeter (m).
+7       sa=0.0            Distance between OD-edge and poly at source side(m).
+8       sb=0.0            Distance between OD-edge and poly at drain side(m).
+9       sd=0.0            Distance between neighboring fingers(m).
+10      nf=1.0            Number of fingers.
+11      mult=1.0          Number of devices in parallel.
+12      m=1.0             Number of devices in parallel.
+13      delvto=0.0        Threshold voltage shift parameter (V).
+14      factuo=1.0        Low-field mobility pre-factor.
+15      trise=0.0         Temperature rise from ambient.
+16      isnoisy=yes       Should device generate noise. Possible values are no
+                          and yes.
+17      dtemp=0.0         Alias for trise.
+
+
+================
+Model Parameters
+================
+
+1       swscale=0.0       Parameter set mode (local=0, global=1).
+2       version=2.00      Model version number option, the available version
+                          number is 2.00, 2.10, 2.11 and 2.20. The default
+                          version is 2.00.
+3       swclipchk=0.0     Flag for check of parameters clipping (without=0,
+                          with=1).
+4       swsubdep=0.0      Flag for substrate depletion model (without=0,
+                          with=1).
+5       swigate=0.0       Flag for gate current (without=0, with=1).
+6       swgidl=0.0        Flag for GIDL current (without=0, with=1).
+7       swshe=0.0         Flag for self heating effect (without=0, with=1).
+8       swign=1.0         Flag for induced gate noise model (without=0,
+                          with=1).
+9       swjunasym=0.0     Flag for source/drain junction asymmetry (without=0,
+                          with=1).
+10      qmc=1.0           Quantum correction factor (no correction=0, full
+                          correction=1).
+11      type=1.0          Channel type parameter, +1|n=NMOS -1|p=PMOS. Possible
+                          values are p and n.
+12      tr=21.0           Nominal temperature (C).
+13      tmax=150.0        Maximum self-heating temperature elevation (C).
+14      toxe=2.0e-09      Front gate equivalent oxide thickness (m).
+15      tsi=1.0e-08       Silicon or SiGe film thickness (m).
+16      xge=0.0           Fraction of Ge content in the channel.
+17      tbox=1.0e-07      Back gate oxide thickness (m).
+18      nch=0.0           Thin film doping (n-type=negative value,
+                          p-type=positive value) (cm^-3).
+19      nsub=3.0e18       Substrate doping (n-type=negative value,
+                          p-type=positive value) (cm^-3).
+20      ct=0.0            Interface states factor.
+21      toxp=2.0e-09      Front gate physical oxide thickness (m).
+22      nov=1.0e20        Effective doping of overlap-ldd regions (no doping
+                          effect=0) (cm^-3).
+23      novd=1.0e20       Effective doping of overlap-ldd regions ar drain side
+                          (cm^-3).
+24      vfb=0.0           Flat-band voltage of the front gate at TR (V).
+25      vfbb=0.0          Flat-band voltage of the back gate at TR (V).
+26      stvfb=0.0         Temperature dependence of VFB and VFBB (V/K).
+27      cicf=1.0          Long channel front interface coupling coefficient.
+28      cic=1.0           Long channel back interface coupling coefficient.
+29      psce=0.0          Short channel effect coefficient.
+30      psceb=1.0         Short channel back to front interface asymmetry
+                          factor.
+31      pscedl=0.0        Short channel modulation coefficient due to Leff
+                          variation.
+32      nsddc=1.0e22      Source/Drain effective doping level for DC model
+                          (cm^-3).
+33      pscedlb=0.0       Back bias dependence of short channel effect
+                          modulation.
+34      pnce=0.0          Narrow channel effect on body factor.
+35      cf=0.0            DIBL parameter.
+36      cfb=1.0           DIBL back to front interface asymmetry factor.
+37      stcf=0.0          Temperature dependence of CF, with same scaling as
+                          CF.
+38      cfd=0.2           Drain voltage dependence parameter of DIBL (V).
+39      cfdl=0.0          DIBL modulation coefficient due to Leff variation.
+40      cfdlb=0.0         Back bias dependence of DIBL modulation.
+41      betn=5.0e-2       Front channel aspect ratio times zero-field mobility
+                          (m^2/V/s).
+42      betnb=1.0         Back channel over front channel zero-field mobility
+                          ratio.
+43      stbet=1.5         Temperature dependence of BETN.
+44      cs=0.0            Remote Coulomb scattering parameter at TR.
+45      csfi=0.0          Field dependence of Coulomb scattering at front
+                          interface.
+46      csbi=0.0          Field dependence of Coulomb scattering at back
+                          interface.
+47      stcs=0.0          Temperature dependence of CS.
+48      thecs=1.5         Remote Coulomb scattering exponent at TR.
+49      stthecs=0.0       Temperature dependence of THECS.
+50      csthr=2.0         Remote Coulomb scattering threshold level.
+51      csthrb=1.0        Remote Coulomb scattering threshold asymmetry
+                          parameter.
+52      mue=0.0           Front channel mobility reduction coefficient at TR
+                          (cm/MV).
+53      stmue=0.0         Temperature dependence of MUE.
+54      themu=1.5         Front channel mobility reduction exponent at TR.
+55      stthemu=0.0       Temperature dependence of THEMU.
+56      xcor=0.0          Front channel non-universality factor (V^-1).
+57      xcorb=1.0         Asymmetry term of non-universality factor.
+58      stxcor=0.0        Temperature dependence of XCOR.
+59      feta=1.0          Effective field parameter.
+60      rs=30.0           Source/Drain series resistance at TR (Ohm).
+61      rsig=0.0          Source/Drain extension resistance coefficient.
+62      strs=0.0          Temperature dependence of RS.
+63      rsg=0.0           Transverse electric field dependence of RS.
+64      thersg=2.0        Transverse electric field dependence exponent of RS.
+65      rsb=0.0           Back bias dependence of RS.
+66      thesat=0.0        Velocity saturation parameter at TR (V^-1).
+67      stthesat=(-0.1)   Temperature dependence of THESAT.
+68      thesatg=0.0       Front gate bias dependence of velocity saturation.
+69      thesatb=0.0       Back gate bias dependence of velocity saturation.
+70      ax=8.0            Linear/saturation transition exponent.
+71      alp=0.0           CLM pre-factor.
+72      alp1=0.0          CLM enhancement factor above threshold (V).
+73      alpb=0.0          Back bias dependence of channel length modulation.
+74      vp=0.05           CLM logarithm dependence factor (V).
+75      vpg=0.0           Transverse electric field dependence of CLM logarithm
+                          factor.
+76      gco=0.0           Gate tunneling energy adjustment in inversion.
+77      iginv=0.0         Gate to channel current pre-factor (A).
+78      igovinv=0.0       Gate to overlap current pre-factor in inversion (A).
+79      igovinvd=0.0      Gate to overlap current pre-factor in inversion at
+                          drain side (A).
+80      igovacc=0.0       Gate to overlap current pre-factor in accumulation
+                          (A).
+81      igovaccd=0.0      Gate to overlap current pre-factor in accumulation at
+                          drain side (A).
+82      stig=0.0          Temperature dependence of all gate currents.
+83      gc2ch=0.375       Gate to channel current slope factor.
+84      gc3ch=0.063       Gate to channel current curvature factor.
+85      gc2ov=0.375       Gate current slope factor in overlaps.
+86      gc3ov=0.063       Gate current curvature factor in overlaps.
+87      gc2ovinv=0.375    Gate current slope factor for overlap regions in
+                          inversion mode.
+88      gc3ovinv=0.063    Gate current curvature factor for overlap regions in
+                          inversion mode.
+89      gc2ovacc=0.375    Gate current slope factor for overlap regions in
+                          accumulation mode.
+90      gc3ovacc=0.063    Gate current curvature factor for overlap regions in
+                          accumulation mode.
+91      gcdov=0.0         High drain voltage dependence of overlap gate current
+                          (V^-1).
+92      gcvdov=1.0        Threshold of high drain voltage effect on overlap
+                          gate current (V).
+93      chib=3.1          Tunneling barrier height (V).
+94      niginv=0.0        Gate tunneling slope adjustment in subthreshold
+                          regime.
+95      agidl=0.0         GIDL pre-factor (A/V^3).
+96      agidld=0.0        GIDL pre-factor at drain side (A/V^3).
+97      bgidl=41.0        GIDL probability factor at TR (V).
+98      bgidld=41.0       GIDL probability factor at TR at drain side (V).
+99      stbgidl=0.0       Temperature dependence of BGIDL (V/K).
+100     stbgidld=0.0      Temperature dependence of BGIDL at drain side (V/K).
+101     cgidl=0.0         Substrate bias dependence of GIDL (V^-1).
+102     cgidld=0.0        Substrate bias dependence of GIDL at drain side
+                          (V^-1).
+103     dgidl=0.0         High longitudinal field parameter of GIDL (V^-1).
+104     dgidld=0.0        High longitudinal field parameter of GIDL at drain
+                          side (V^-1).
+105     areaq=1.0e-12     Effective channel area for intrinsic CV (m^2).
+106     cgbov=0.0         Oxide capacitance for gate-substrate overlap (F).
+107     nsdac=1.0e22      Source/Drain effective doping level for AC model
+                          (cm^-3).
+108     fif=0.0           Inner fringe capacitance prefactor.
+109     fsceac=0.0        Short channel effect adjustment factor for charge
+                          model.
+110     cov=0.0           Overlap capacitance per side (F).
+111     covd=0.0          Overlap capacitance at drain side (F).
+112     covdl=0.0         Overlap capacitance modulation coefficient due to
+                          Leff variation.
+113     covdlb=0.0        Overlap capacitance modulation with back bias.
+114     dvfbov=0.0        Overlap capacitance flat-band voltage adjustment
+                          (V).
+115     cfr=0.0           Outer fringe capacitance per side (F).
+116     cfrd=0.0          Outer fringe capacitance at drain side (F).
+117     csd=0.0           Drain-source capacitance (F).
+118     csdbp=0.0         Drain/source to substrate perimeter capacitance
+                          (F/m).
+119     rth=1.0e4         Thermal resistance (K/W).
+120     strth=0.0         Temperature dependence of RTH.
+121     cth=1.0e-11       Thermal capacitance (J/K).
+122     fnt=1.0           Thermal noise coefficient.
+123     nfa=8.0e+22       First coefficient of flicker noise (V^-1/m^4).
+124     nfb=3.0e+07       Second coefficient of flicker noise (V^-1/m^2).
+125     nfc=0.0           Third coefficient of flicker noise (V^-1).
+126     nfe=0.0           Flicker noise front transverse field effect
+                          coefficient.
+127     nfeb=0.0          Flicker noise back transverse field effect
+                          coefficient.
+128     ef=1.0            Frequency coefficient of flicker noise.
+129     lvaro=0.0         Geometry independent difference between physical and
+                          drawn gate lengths (m).
+130     lvarl=0.0         Length dependence of LPS.
+131     lvarw=0.0         Width dependence of LPS.
+132     lap=0.0           Effective channel length reduction per side (m).
+133     wvaro=0.0         Geometry-independent difference between physical and
+                          drawn field-oxide opening (m).
+134     wvarl=0.0         Length dependence of WOD.
+135     wvarw=0.0         Width dependence of WOD.
+136     wot=0.0           Effective reduction of channel width per side (m).
+137     dlq=0.0           Effective channel length additional offset for charge
+                          model (m).
+138     dwq=0.0           Effective channel width additional offset for charge
+                          model (m).
+139     toxeo=2.0e-9      Front gate equivalent oxide thickness (m).
+140     tsio=1.0e-8       Silicon or SiGe film thickness (m).
+141     xgeo=0.0          Fraction of Ge content in the channel.
+142     tboxo=1.0e-7      Buried oxide thickness (m).
+143     ncho=0.0          Thin film doping (n-type=negative value,
+                          p-type=positive value) (cm^-3).
+144     nsubo=3.0e18      Substrate doping (n-type=negative value,
+                          p-type=positive value) (cm^-3).
+145     cto=0.0           Interface states factor.
+146     toxpo=2.0e-09     Front gate physical oxide thickness (m).
+147     novo=1.0e20       Effective doping of overlap-ldd regions (no doping
+                          effect=0) (cm^-3).
+148     novdo=1.0e20      Effective doping of overlap-ldd regions at drain side
+                          (cm^-3).
+149     vfbo=0.0          Geometry-independent front gate flat-band voltage at
+                          TR (V).
+150     vfbl=0.0          Length dependence of VFB (V).
+151     vfblexp=2.0       Exponent describing length dependence of VFB.
+152     vfbl2=0.0         Second order length dependence of VFB.
+153     vfblexp2=2.0      Exponent of second order length dependence of VFB.
+154     vfbw=0.0          Width dependence of VFB (V).
+155     vfblw=0.0         Area dependence of VFB.
+156     vfbbo=0.0         Geometry-independent back gate flat-band voltage at
+                          TR (V).
+157     vfblbo=1.0        Roll-off back to front interface asymmetry factor.
+158     stvfbo=0.0        Geometry-independent temperature dependence of VFB
+                          and VFBB (V/K).
+159     stvfbl=0.0        Length dependence of STVFB.
+160     stvfbw=0.0        Width dependence of STVFB.
+161     stvfblw=0.0       Area dependence of STVFB.
+162     cicfo=1.0         Long channel front interface coupling coefficient.
+163     cico=1.0          Long channel back interface coupling coefficient.
+164     pscel=0.0         Length dependence of PSCE.
+165     pscelexp=2.0      Exponent describing length dependence of PSCE.
+166     pscew=0.0         Width dependence of PSCE.
+167     pscebo=1.0        Short channel back to front interface asymmetry
+                          factor.
+168     pscedll=0.0       Short channel modulation coefficient due to Leff
+                          variation.
+169     pscedlw=0.0       Width dependence of PSCEDL.
+170     nsddco=1.0e22     Source/Drain effective doping level for DC model
+                          (cm^-3).
+171     pscedlbo=0.0      Back bias dependence of short channel effect
+                          modulation.
+172     pncew=0.0         Narrow channel effect on body factor for a width of
+                          WEN.
+173     cfl=0.0           Length dependence of DIBL-parameter.
+174     cflexp=2.0        Exponent for length dependence of CF.
+175     cfw=0.0           Width dependence of CF.
+176     cfbo=1.0          DIBL back to front interface asymmetry factor.
+177     stcfo=0.0         Temperature dependence of CF.
+178     stcfl=0.0         Temperature dependence of CF, with same scaling as
+                          CF.
+179     cfdo=0.2          Drain voltage dependence parameter of DIBL (V).
+180     cfdll=0.0         DIBL modulation coefficient due to Leff variation.
+181     cfdlw=0.0         Width dependence of CFDL.
+182     cfdlbo=0.0        Back bias dependence of DIBL modulation.
+183     uo=5.0e-2         Front channel zero-field mobility at TR (m^2/V/s).
+184     fbet1=0.0         First length dependence modulation of BETN.
+185     fbet1w=0.0        Width dependence of FBET1.
+186     lp1=1.0e-8        First characteristic length of BETN scaling (m).
+187     lp1w=0.0           Width dependence of LP1.
+188     fbet2=0.0         Second length dependence modulation of BETN.
+189     lp2=1.0e-8        Second characteristic length of BETN scaling (m).
+190     betw1=0.0         First width dependence modulation of BETN.
+191     betw2=0.0         Second width dependence modulation of BETN.
+192     wbet=1.0e-8       Characteristic width of BETN scaling (m).
+193     betnl=0.0         Second order length dependence of BETN.
+194     betnlexp=1.0      Exponent for the second order length dependence of
+                          BETN.
+195     betnw=0.0         Second order width dependence of BETN.
+196     betnbo=1.0        Back channel over front channel zero-field mobility
+                          ratio.
+197     stbeto=1.5        Geometry independent temperature dependence of BETN.
+198     stbetl=0.0        Length dependence of STBET.
+199     stbetw=0.0        Width dependence of STBET.
+200     stbetlw=0.0       Area dependence of STBET.
+201     cso=0.0           Remote Coulomb scattering parameter at TR.
+202     csl=0.0           Length dependence of CS.
+203     cslexp=1.0        Exponent describing length dependence of CS.
+204     csw=0.0           Width dependence of CS.
+205     cslw=0.0          Area dependence of CS.
+206     csfio=0.0         Field dependence of Coulomb scattering at front
+                          interface.
+207     csbio=0.0         Field dependence of Coulomb scattering at back
+                          interface.
+208     stcso=0.0         Temperature dependence of CS.
+209     stcsl=0.0         Length dependence of STCS.
+210     stcsw=0.0         Width dependence of STCS.
+211     stcslw=0.0        Area dependence of STCS.
+212     thecso=1.5        Remote Coulomb scattering exponent at TR.
+213     stthecso=0.0      Temperature dependence of THECS.
+214     csthro=2.0        Remote Coulomb scattering threshold level.
+215     csthrbo=1.0       Remote Coulomb scattering threshold asymmetry
+                          parameter.
+216     mueo=0.0          Front channel mobility reduction coefficient at TR
+                          (cm/MV).
+217     stmueo=0.0        Temperature dependence of MUE.
+218     themuo=1.5        Front channel mobility reduction exponent at TR.
+219     stthemuo=0.0      Temperature dependence of THEMU.
+220     xcoro=0.0         Geometry-independent part of non-universality factor
+                          (V^-1).
+221     xcorl=0.0         Length dependence of XCOR.
+222     xcorlexp=1.0      Exponent describing length dependence of XCOR.
+223     xcorw=0.0         Width dependence of XCOR.
+224     xcorlw=0.0        Area dependence of XCOR.
+225     xcorbo=1.0        Asymmetry term of non-universality factor.
+226     stxcoro=0.0       Temperature dependence of XCOR.
+227     fetao=1.0         Effective field parameter.
+228     rsw1=30.0         Source/Drain series resistance for channel width WEN
+                          at TR (Ohm).
+229     rsw2=0.0          Higher-order width scaling of source/drain series
+                          resistance.
+230     rsigo=0.0         Source/Drain extension resistance coefficient.
+231     strso=0.0         Temperature dependence of RS.
+232     rsgo=0.0          Transverse electric field dependence of RS.
+233     thersgo=2.0       Transverse electric field dependence exponent of RS.
+234     rsbo=0.0          Back bias dependence of RS.
+235     thesato=0.0       Geometry independent velocity saturation parameter at
+                          TR (V^-1).
+236     thesatl=0.0       Length dependence of THESAT (s/m^2).
+237     thesatlexp=1.0    Exponent for length dependence of THESAT.
+238     thesatw=0.0       Width dependence of THESAT.
+239     thesatlw=0.0      Area dependence of THESAT.
+240     stthesato=(-0.1)  Geometry independent temperature dependence of
+                          THESAT.
+241     stthesatl=0.0     Length dependence of STTHESAT.
+242     stthesatw=0.0     Width dependence of STTHESAT.
+243     stthesatlw=0.0    Area dependence of STTHESAT.
+244     thesatgo=0.0      Front gate bias dependence of velocity saturation.
+245     thesatbo=0.0      Back gate bias dependence of velocity saturation.
+246     axo=8.0           Geometry independent linear/saturation transition
+                          exponent.
+247     axl=0.0           Length dependence of AX.
+248     axlexp=1.0        Exponent for length dependence of AX.
+249     alpl1=0.0         Length dependence of CLM pre-factor ALP.
+250     alplexp=1.0       Exponent for length dependence of ALP.
+251     alpl2=0.0         Second order length dependence of ALP.
+252     alplexp2=2.0      Exponent for second order length dependence of ALP.
+253     alpw=0.0          Width dependence of ALP.
+254     alp1l1=0.0        Length dependence of CLM enhancement factor above
+                          threshold ALP1 (V).
+255     alp1lexp=0.5      Exponent for length dependence of ALP1.
+256     alp1l2=0.0        Second order length dependence of ALP1.
+257     alp1lexp2=1.5     Exponent for second order length dependence of ALP1.
+258     alp1w=0.0         Width dependence of ALP1.
+259     alpbo=0.0         Back bias dependence of channel length modulation.
+260     vpo=0.05          CLM logarithm dependence factor (V).
+261     vpgo=0.0          Transverse electric field dependence of CLM logarithm
+                          factor.
+262     gcoo=0.0          Gate tunneling energy adjustment in inversion.
+263     iginvlw=0.0       Gate to channel current pre-factor for a channel area
+                          of WEN.LEN (A).
+264     igovinvw=0.0      Gate to overlap current pre-factor for a width of WEN
+                          in inversion (A).
+265     igovinvdw=0.0     Gate to overlap current pre-factor for a width of WEN
+                          in inversion at drain side (A).
+266     igovaccw=0.0      Gate to overlap current pre-factor for a width of WEN
+                          in accumulation (A).
+267     igovaccdw=0.0     Gate to overlap current pre-factor for a width of WEN
+                          in accumulation at drain side (A).
+268     stigo=0.0         Temperature dependence of all gate currents.
+269     gc2cho=0.375      Gate to channel current slope factor.
+270     gc3cho=0.063      Gate to channel current curvature factor.
+271     gc2ovo=0.375      Gate current slope factor in overlaps.
+272     gc3ovo=0.063      Gate current curvature factor in overlaps.
+273     gc2ovinvo=0.375   Gate current slope factor for overlap regions in
+                          inversion mode.
+274     gc3ovinvo=0.063   Gate current curvature factor for overlap regions in
+                          inversion mode.
+275     gc2ovacco=0.375   Gate current slope factor for overlap regions in
+                          accumulation mode.
+276     gc3ovacco=0.063   Gate current curvature factor for overlap regions in
+                          accumulation mode.
+277     gcdovl=0.0        High drain voltage dependence of overlap gate current
+                          (V^-1).
+278     gcvdovo=1.0       Threshold of high drain voltage effect on overlap
+                          gate current (V).
+279     chibo=3.1         Tunneling barrier height (V).
+280     niginvo=0.0       Gate tunneling slope adjustment in subthreshold
+                          regime.
+281     agidlw=0.0        GIDL pre-factor for a width of WEN (A/V^3).
+282     agidldw=0.0       GIDL pre-factor for a width of WEN at drain side
+                          (A/V^3).
+283     bgidlo=41.0       GIDL probability factor at TR (V).
+284     bgidldo=41.0      GIDL probability factor at TR at drain side (V).
+285     stbgidlo=0.0      Temperature dependence of BGIDL (V/K).
+286     stbgidldo=0.0     Temperature dependence of BGIDL at drain side (V/K).
+287     cgidlo=0.0        Substrate bias dependence of GIDL (V^-1).
+288     cgidldo=0.0       Substrate bias dependence of GIDL at drain side
+                          (V^-1).
+289     dgidll=0.0        High longitudinal field parameter of GIDL (V^-1).
+290     dgidldl=0.0       High longitudinal field parameter of GIDL at drain
+                          side (V^-1).
+291     cgbovo=0.0        Geometry independent gate-substrate overlap
+                          capacitance part (F).
+292     cgbovl=0.0        Gate-substrate overlap capacitance for a length of
+                          LEN (F).
+293     nsdaco=1.0e22     Source/Drain effective doping level for AC model
+                          (cm^-3).
+294     fifw=0.0          Inner fringe capacitance prefactor for a width of
+                          WEN.
+295     fsceaco=0.0       Short channel effect adjustment factor for charge
+                          model.
+296     lovo=0.0          Overlap length for gate/source-drain hdd overlap
+                          capacitance (m).
+297     lovdo=0.0         Overlap length for gate/drain hdd overlap capacitance
+                          (m).
+298     covdlo=0.0        Overlap capacitance modulation coefficient due to
+                          Leff variation.
+299     covdlbo=0.0       Overlap capacitance modulation with back bias.
+300     covdlw=0.0        Width dependence of COVDL.
+301     dvfbovo=0.0       Overlap capacitance flat-band voltage adjustment
+                          (V).
+302     cfro=0.0          Corner related outer fringe capacitance (F).
+303     cfrdo=0.0         Corner related outer fringe capacitance at drain side
+                          (F).
+304     cfrw=0.0          Outer fringe capacitance per side for a width of WEN
+                          (F).
+305     cfrdw=0.0         Outer fringe capacitance per side for a width of WEN
+                          at drain side (F).
+306     csdo=1.0          Drain-source capacitance correction factor.
+307     csdbpo=0.0        Drain/source to substrate perimeter capacitance
+                          (F/m).
+308     rtho=1.0e5        Geometry independent thermal resistance (K/W).
+309     rthl=0.0          Length dependence of RTH.
+310     rthw=0.0          Width dependence of RTH.
+311     rthlw=9.0         Area dependence of RTH.
+312     strtho=0.0        Temperature dependence of RTH.
+313     ctho=1.0e-12      Geometry independent thermal capacitance (J/K).
+314     lambtho=1.0e-7    Characteristic length of lateral thermal coupling for
+                          multifinger devices (m).
+315     ftho=0.0          First neighbour thermal coupling factor for
+                          multifinger devices.
+316     fnto=1.0          Thermal noise coefficient.
+317     nfalw=8.0e22      First coefficient of flicker noise (V^-1/m^4).
+318     nfblw=3.0e7       Second coefficient of flicker noise (V^-1/m^2).
+319     nfclw=0.0         Third coefficient of flicker noise (V^-1).
+320     nfeo=0.0          Flicker noise front transverse field effect
+                          coefficient.
+321     nfebo=0.0         Flicker noise back transverse field effect
+                          coefficient.
+322     efo=1.0           Frequency coefficient of flicker noise.
+323     swstress=1.0      Stress model selection flag (1= Previous STI stress
+                          model, 2= New channel stress model).
+324     saref=1.0e-6      Reference distance between OD-edge and poly from one
+                          side (m).
+325     sbref=1.0e-6      Reference distance between OD-edge and poly from
+                          other side (m).
+326     wlod=0.0          Width parameter (m).
+327     kuo=0.0           Mobility degradation/enhancement coefficient (m).
+328     kvsat=0.0         Saturation velocity degradation/enhancement
+                          coefficient.
+329     tkuo=0.0          Temperature dependence of KUO.
+330     lkuo=0.0          Length dependence of KUO (m^LLODKUO).
+331     wkuo=0.0          Width dependence of KUO (m^WLODKUO).
+332     pkuo=0.0          Cross-term dependence of KUO (m^(LLODKUO+WLODKUO)).
+333     llodkuo=0.0       Length parameter for UO stress effect.
+334     wlodkuo=0.0       Width parameter for UO stress effect.
+335     kvtho=0.0         Threshold shift parameter (Vm).
+336     lkvtho=0.0        Length dependence of KVTHO (m^LLODVTH).
+337     wkvtho=0.0        Width dependence of KVTHO (m^WLODVTH).
+338     pkvtho=0.0        Cross-term dependence of KVTHO
+                          (m^(LLODVTH+WLODVTH)).
+339     llodvth=0.0       Length parameter for VTH-stress effect.
+340     wlodvth=0.0       Width parameter for VTH-stress effect.
+341     stetao=0.0        Eta0 shift factor related to VTHO change (m).
+342     lodetao=1.0       Eta0 shift modification factor for stress effect.
+343     strlambda=1.0e-7  Relaxation characteristic length (m).
+344     stralpha=3.0      Asymmetry parameter.
+345     strdvfbo=0.0      Threshold shift parameter (V).
+346     strwdvfbo=0.0     Width dependence of threshold shift parameter.
+347     strdcfl=0.0       DIBL variation parameter.
+348     strruo=0.0        Mobility degradation/enhancement coefficient.
+349     strtruo=0.0       Temperature dependence of mobility
+                          degradation/enhancement coefficient.
+350     strrvsat=0.0      Saturation velocity degradation/enhancement
+                          coefficient.
+351     vthmod            Vth output selector. 'std' outputs model equation
+                          Vth. 'vthcc' outputs constant current Vth, and may
+                          impact simulation performance. The default value is
+                          taken from the options parameter 'vthmod'. Possible
+                          values are std and vthcc.
+352     ivth (A)          Vth current parameter. The default value is taken
+                          from the options parameter 'ivthn' or 'ivthp',
+                          depending on the type of the model.
+353     ivthw (m)         Width offset for constant current Vth. The default
+                          value is taken from the options parameter 'ivthw'.
+354     ivthl (m)         Length offset for constant current Vth. The default
+                          value is taken from the options parameter 'ivthl'.
+355     ivth_vdsmin (V)   Minimum Vds in constant current Vth calculating. The
+                          default value is taken from the options parameter
+                          'ivth_vdsmin'.
+
+
+=================
+Output Parameters
+=================
+
+1       meff              Effective multiplicity factor (m-factor).
+
+
+==========================
+Operating Point Parameters
+==========================
+
+1       typeop            MOSFET type.
+2       vth (V)           Threshold voltage including back bias and drain bias
+                          effects.
+3       vds (V)           Drain-Source DC voltage.
+4       vsb (V)           Source-Bulk DC voltage.
+5       vgs (V)           Gate-Source DC voltage.
+6       vth_drive (V)     Effective gate drive voltage including back bias and
+                          drain bias effects.
+7       vdsat (V)         Drain saturation voltage.
+8       vdsat_marg (V)    Saturation limit.
+9       ids (I)           DC Channel current (excluding tunnel, GISL and GIDL
+                          currents).
+10      id (I)            Total DC drain current.
+11      ig (I)            Total DC gate current.
+12      is (I)            Total DC source current.
+13      ib (I)            Total DC bulk current.
+14      igidl (I)         DC GIDL current.
+15      igisl (I)         DC GISL current.
+16      igs (I)           DC gate-source leakage current.
+17      igd (I)           DC gate-drain leakage current.
+18      idb (I)           DC drain-bulk current.
+19      isb (I)           DC source-bulk current.
+20      gm                DC transconductance.
+21      gmb               DC bulk transconductance.
+22      gds               DC output conductance.
+23      cdd (C)           Drain capacitance.
+24      cdg (C)           Drain to gate transcapacitance.
+25      cdb (C)           Drain to bulk transcapacitance.
+26      cds (C)           Drain to source transcapacitance.
+27      cgd (C)           Gate to drain transcapacitance.
+28      cgg (C)           Gate capacitance.
+29      cgb (C)           Gate to bulk transcapacitance.
+30      cgs (C)           Gate to source transcapacitance.
+31      cbd (C)           Bulk to drain transcapacitance.
+32      cbg (C)           Bulk to gate transcapacitance.
+33      cbb (C)           Bulk capacitance.
+34      cbs (C)           Bulk to source transcapacitance.
+35      csd (C)           Source to drain transcapacitance.
+36      csg (C)           Source to gate transcapacitance.
+37      csb (C)           Source to bulk transcapacitance.
+38      css (C)           Source capacitance.
+39      tk                MOSFET device temperature.
+40      dtsh              Channel temperature elevation due to self-heating.
+41      self_gain         Self gain.
+42      rout (R)          Output resistance.
+43      vearly (V)        Equivalent early voltage.
+44      beff              Gain factor.
+45      ft                Unity gain frequency.
+46      rgate (R)         Gate resistance.
+47      gmoverid          Gm over Id.
+48      pwr (W)           Power dissipation.
+49      region            Estimated operating region. Spectre outputs number
+                          (0-4) in a rawfile. Possible values are off, triode,
+                          sat, subth, and breakdown.
+
+
+===============
+Parameter Index
+===============
+
+    adrain ........... I-4   ftho ........... M-315   sbref .......... M-325
+    agidl ........... M-95   gc2ch ........... M-83   sd ............... I-9
+    agidld .......... M-96   gc2cho ......... M-269   self_gain ...... OP-41
+    agidldw ........ M-282   gc2ov ........... M-85   stbet ........... M-43
+    agidlw ......... M-281   gc2ovacc ........ M-89   stbetl ......... M-198
+    alp ............. M-71   gc2ovacco ...... M-275   stbetlw ........ M-200
+    alp1 ............ M-72   gc2ovinv ........ M-87   stbeto ......... M-197
+    alp1l1 ......... M-254   gc2ovinvo ...... M-273   stbetw ......... M-199
+    alp1l2 ......... M-256   gc2ovo ......... M-271   stbgidl ......... M-99
+    alp1lexp ....... M-255   gc3ch ........... M-84   stbgidld ....... M-100
+    alp1lexp2 ...... M-257   gc3cho ......... M-270   stbgidldo ...... M-286
+    alp1w .......... M-258   gc3ov ........... M-86   stbgidlo ....... M-285
+    alpb ............ M-73   gc3ovacc ........ M-90   stcf ............ M-37
+    alpbo .......... M-259   gc3ovacco ...... M-276   stcfl .......... M-178
+    alpl1 .......... M-249   gc3ovinv ........ M-88   stcfo .......... M-177
+    alpl2 .......... M-251   gc3ovinvo ...... M-274   stcs ............ M-47
+    alplexp ........ M-250   gc3ovo ......... M-272   stcsl .......... M-209
+    alplexp2 ....... M-252   gcdov ........... M-91   stcslw ......... M-211
+    alpw ........... M-253   gcdovl ......... M-277   stcso .......... M-208
+    areaq .......... M-105   gco ............. M-76   stcsw .......... M-210
+    asource .......... I-3   gcoo ........... M-262   stetao ......... M-341
+    ax .............. M-70   gcvdov .......... M-92   stig ............ M-82
+    axl ............ M-247   gcvdovo ........ M-278   stigo .......... M-268
+    axlexp ......... M-248   gds ............ OP-22   stmue ........... M-53
+    axo ............ M-246   gm ............. OP-20   stmueo ......... M-217
+    beff ........... OP-44   gmb ............ OP-21   stralpha ....... M-344
+    betn ............ M-41   gmoverid ....... OP-47   strdcfl ........ M-347
+    betnb ........... M-42   ib ............. OP-13   strdvfbo ....... M-345
+    betnbo ......... M-196   id ............. OP-10   strlambda ...... M-343
+    betnl .......... M-193   idb ............ OP-18   strruo ......... M-348
+    betnlexp ....... M-194   ids ............. OP-9   strrvsat ....... M-350
+    betnw .......... M-195   ig ............. OP-11   strs ............ M-62
+    betw1 .......... M-190   igd ............ OP-17   strso .......... M-231
+    betw2 .......... M-191   igidl .......... OP-14   strth .......... M-120
+    bgidl ........... M-97   iginv ........... M-77   strtho ......... M-312
+    bgidld .......... M-98   iginvlw ........ M-263   strtruo ........ M-349
+    bgidldo ........ M-284   igisl .......... OP-15   strwdvfbo ...... M-346
+    bgidlo ......... M-283   igovacc ......... M-80   stthecs ......... M-49
+    cbb ............ OP-33   igovaccd ........ M-81   stthecso ....... M-213
+    cbd ............ OP-31   igovaccdw ...... M-267   stthemu ......... M-55
+    cbg ............ OP-32   igovaccw ....... M-266   stthemuo ....... M-219
+    cbs ............ OP-34   igovinv ......... M-78   stthesat ........ M-67
+    cdb ............ OP-25   igovinvd ........ M-79   stthesatl ...... M-241
+    cdd ............ OP-23   igovinvdw ...... M-265   stthesatlw ..... M-243
+    cdg ............ OP-24   igovinvw ....... M-264   stthesato ...... M-240
+    cds ............ OP-26   igs ............ OP-16   stthesatw ...... M-242
+    cf .............. M-35   is ............. OP-12   stvfb ........... M-26
+    cfb ............. M-36   isb ............ OP-19   stvfbl ......... M-159
+    cfbo ........... M-176   isnoisy ......... I-16   stvfblw ........ M-161
+    cfd ............. M-38   ivth ........... M-352   stvfbo ......... M-158
+    cfdl ............ M-39   ivth_vdsmin .... M-355   stvfbw ......... M-160
+    cfdlb ........... M-40   ivthl .......... M-354   stxcor .......... M-58
+    cfdlbo ......... M-182   ivthw .......... M-353   stxcoro ........ M-226
+    cfdll .......... M-180   kuo ............ M-327   swclipchk ........ M-3
+    cfdlw .......... M-181   kvsat .......... M-328   swgidl ........... M-6
+    cfdo ........... M-179   kvtho .......... M-335   swigate .......... M-5
+    cfl ............ M-173   l ................ I-1   swign ............ M-8
+    cflexp ......... M-174   lambtho ........ M-314   swjunasym ........ M-9
+    cfr ............ M-115   lap ............ M-132   swscale .......... M-1
+    cfrd ........... M-116   lkuo ........... M-330   swshe ............ M-7
+    cfrdo .......... M-303   lkvtho ......... M-336   swstress ....... M-323
+    cfrdw .......... M-305   llodkuo ........ M-333   swsubdep ......... M-4
+    cfro ........... M-302   llodvth ........ M-339   tbox ............ M-17
+    cfrw ........... M-304   lodetao ........ M-342   tboxo .......... M-142
+    cfw ............ M-175   lovdo .......... M-297   thecs ........... M-48
+    cgb ............ OP-29   lovo ........... M-296   thecso ......... M-212
+    cgbov .......... M-106   lp1 ............ M-186   themu ........... M-54
+    cgbovl ......... M-292   lp1w ........... M-187   themuo ......... M-218
+    cgbovo ......... M-291   lp2 ............ M-189   thersg .......... M-64
+    cgd ............ OP-27   lvarl .......... M-130   thersgo ........ M-233
+    cgg ............ OP-28   lvaro .......... M-129   thesat .......... M-66
+    cgidl .......... M-101   lvarw .......... M-131   thesatb ......... M-69
+    cgidld ......... M-102   m ............... I-12   thesatbo ....... M-245
+    cgidldo ........ M-288   meff ............. O-1   thesatg ......... M-68
+    cgidlo ......... M-287   mue ............. M-52   thesatgo ....... M-244
+    cgs ............ OP-30   mueo ........... M-216   thesatl ........ M-236
+    chib ............ M-93   mult ............ I-11   thesatlexp ..... M-237
+    chibo .......... M-279   nch ............. M-18   thesatlw ....... M-239
+    cic ............. M-28   ncho ........... M-143   thesato ........ M-235
+    cicf ............ M-27   nf .............. I-10   thesatw ........ M-238
+    cicfo .......... M-162   nfa ............ M-123   tk ............. OP-39
+    cico ........... M-163   nfalw .......... M-317   tkuo ........... M-329
+    cov ............ M-110   nfb ............ M-124   tmax ............ M-13
+    covd ........... M-111   nfblw .......... M-318   toxe ............ M-14
+    covdl .......... M-112   nfc ............ M-125   toxeo .......... M-139
+    covdlb ......... M-113   nfclw .......... M-319   toxp ............ M-21
+    covdlbo ........ M-299   nfe ............ M-126   toxpo .......... M-146
+    covdlo ......... M-298   nfeb ........... M-127   tr .............. M-12
+    covdlw ......... M-300   nfebo .......... M-321   trise ........... I-15
+    cs .............. M-44   nfeo ........... M-320   tsi ............. M-15
+    csb ............ OP-37   niginv .......... M-94   tsio ........... M-140
+    csbi ............ M-46   niginvo ........ M-280   type ............ M-11
+    csbio .......... M-207   nov ............. M-22   typeop .......... OP-1
+    csd ............ M-117   novd ............ M-23   uo ............. M-183
+    csd ............ OP-35   novdo .......... M-148   vds ............. OP-3
+    csdbp .......... M-118   novo ........... M-147   vdsat ........... OP-7
+    csdbpo ......... M-307   nsdac .......... M-107   vdsat_marg ...... OP-8
+    csdo ........... M-306   nsdaco ......... M-293   vearly ......... OP-43
+    csfi ............ M-45   nsddc ........... M-32   version .......... M-2
+    csfio .......... M-206   nsddco ......... M-170   vfb ............. M-24
+    csg ............ OP-36   nsub ............ M-19   vfbb ............ M-25
+    csl ............ M-202   nsubo .......... M-144   vfbbo .......... M-156
+    cslexp ......... M-203   pdrain ........... I-6   vfbl ........... M-150
+    cslw ........... M-205   pkuo ........... M-332   vfbl2 .......... M-152
+    cso ............ M-201   pkvtho ......... M-338   vfblbo ......... M-157
+    css ............ OP-38   pnce ............ M-34   vfblexp ........ M-151
+    csthr ........... M-50   pncew .......... M-172   vfblexp2 ....... M-153
+    csthrb .......... M-51   psce ............ M-29   vfblw .......... M-155
+    csthrbo ........ M-215   psceb ........... M-30   vfbo ........... M-149
+    csthro ......... M-214   pscebo ......... M-167   vfbw ........... M-154
+    csw ............ M-204   pscedl .......... M-31   vgs ............. OP-5
+    ct .............. M-20   pscedlb ......... M-33   vp .............. M-74
+    cth ............ M-121   pscedlbo ....... M-171   vpg ............. M-75
+    ctho ........... M-313   pscedll ........ M-168   vpgo ........... M-261
+    cto ............ M-145   pscedlw ........ M-169   vpo ............ M-260
+    delvto .......... I-13   pscel .......... M-164   vsb ............. OP-4
+    dgidl .......... M-103   pscelexp ....... M-165   vth ............. OP-2
+    dgidld ......... M-104   pscew .......... M-166   vth_drive ....... OP-6
+    dgidldl ........ M-290   psource .......... I-5   vthmod ......... M-351
+    dgidll ......... M-289   pwr ............ OP-48   w ................ I-2
+    dlq ............ M-137   qmc ............. M-10   wbet ........... M-192
+    dtemp ........... I-17   region ......... OP-49   wkuo ........... M-331
+    dtsh ........... OP-40   rgate .......... OP-46   wkvtho ......... M-337
+    dvfbov ......... M-114   rout ........... OP-42   wlod ........... M-326
+    dvfbovo ........ M-301   rs .............. M-60   wlodkuo ........ M-334
+    dwq ............ M-138   rsb ............. M-65   wlodvth ........ M-340
+    ef ............. M-128   rsbo ........... M-234   wot ............ M-136
+    efo ............ M-322   rsg ............. M-63   wvarl .......... M-134
+    factuo .......... I-14   rsgo ........... M-232   wvaro .......... M-133
+    fbet1 .......... M-184   rsig ............ M-61   wvarw .......... M-135
+    fbet1w ......... M-185   rsigo .......... M-230   xcor ............ M-56
+    fbet2 .......... M-188   rsw1 ........... M-228   xcorb ........... M-57
+    feta ............ M-59   rsw2 ........... M-229   xcorbo ......... M-225
+    fetao .......... M-227   rth ............ M-119   xcorl .......... M-221
+    fif ............ M-108   rthl ........... M-309   xcorlexp ....... M-222
+    fifw ........... M-294   rthlw .......... M-311   xcorlw ......... M-224
+    fnt ............ M-122   rtho ........... M-308   xcoro .......... M-220
+    fnto ........... M-316   rthw ........... M-310   xcorw .......... M-223
+    fsceac ......... M-109   sa ............... I-7   xge ............. M-16
+    fsceaco ........ M-295   saref .......... M-324   xgeo ........... M-141
+    ft ............. OP-45   sb ............... I-8
+
