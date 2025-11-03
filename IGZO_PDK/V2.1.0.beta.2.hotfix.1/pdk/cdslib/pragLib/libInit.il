@@ -1,11 +1,11 @@
-printf(strcat( "---> yod libInit.il [" getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "]\n"))
+printf(strcat( "---> yod libInit.il [" getShellEnvVar("PDK_DIR") "]\n"))
 
 ; Load display.drf
 if( isFile( strcat( getShellEnvVar("HOME") "/display.drf")) then
   drLoadDrf( strcat( getShellEnvVar("HOME") "/display.drf") nil)
   printf("---> ~/display.drf\n")
 else
-  drLoadDrf( strcat( getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "/cdslib/skill/display.drf") nil)
+  drLoadDrf( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/display.drf") nil)
   printf("---> display.drf\n")
 )
 
@@ -43,21 +43,21 @@ pragVars->capMaxL     = "1000u"
 ; Load Callbacks
 ; ******************************************************************************
 
-loadi( strcat( getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "/cdslib/skill/nch_cb.il"))
-loadi( strcat( getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "/cdslib/skill/res_cb.il"))
-loadi( strcat( getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "/cdslib/skill/cap_cb.il"))
-loadi( strcat( getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "/cdslib/skill/resmt2_cb.il"))
+loadi( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/nch_cb.il"))
+loadi( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/res_cb.il"))
+loadi( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/cap_cb.il"))
+loadi( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/resmt2_cb.il"))
 
 ; ******************************************************************************
 ; Load Netlisting Procedure
 ; ******************************************************************************
 
-loadi( strcat( getShellEnvVar("/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk") "/cdslib/skill/pragNchNetlistProc.il"))
+loadi( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/pragNchNetlistProc.il"))
 
 ; ******************************************************************************
 ; Model location
 ; ******************************************************************************
 
 ; Default model locations
-envSetVal("spectre.envOpts" "modelFiles" 'string "$/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk/models/nch.scs;typ $/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk/models/resmod.scs;nom $/home/jsw2277/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix.1/pdk/models/capmod.scs;nom") 
+envSetVal("spectre.envOpts" "modelFiles" 'string "$PDK_DIR/models/nch.scs;typ $PDK_DIR/models/resmod.scs;nom $PDK_DIR/models/capmod.scs;nom") 
 
