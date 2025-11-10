@@ -59,5 +59,5 @@ loadi( strcat( getShellEnvVar("PDK_DIR") "/cdslib/skill/pragNchNetlistProc.il"))
 ; ******************************************************************************
 
 ; Default model locations
-envSetVal("spectre.envOpts" "modelFiles" 'string "$PDK_DIR/models/nch.scs;typ $PDK_DIR/models/resmod.scs;nom $PDK_DIR/models/capmod.scs;nom") 
+envSetVal("spectre.envOpts" "modelFiles" 'string "$PDK_DIR/models/nch_bsimsoi.scs;10um $PDK_DIR/models/resmod.scs;nom $PDK_DIR/models/capmod.scs;nom") 
 

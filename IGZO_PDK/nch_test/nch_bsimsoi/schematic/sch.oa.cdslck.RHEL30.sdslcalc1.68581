@@ -1,0 +1,16 @@
+#
+# Edit Lock-Stake file. CAUTION: Please do not change.
+#
+# Information about current Edit Lock Owner.
+#
+LockStakeVersion               1.1
+LoginName                      gigzotest
+HostName                       sdslcalc1
+ProcessIdentifier              68581
+ProcessCreationTime_UTC        1762319213
+ProcessCreationTime_Readable   Wed Nov  5 14:06:53 2025 KST
+AppIdentifier                  OA File System Design Manager
+OSType                         unix
+ReasonForPlacingEditLock       OpenAccess edit lock
+FilePathUsedToEditLock         /home/gigzotest/github/gigzo_pdk/IGZO_PDK/nch_test/nch_bsimsoi/schematic/sch.oa.cdslck
+TimeEditLocked                 Wed Nov  5 14:07:15 2025 KST

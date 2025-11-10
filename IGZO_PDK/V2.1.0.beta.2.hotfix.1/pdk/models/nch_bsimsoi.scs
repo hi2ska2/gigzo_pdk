@@ -1,5 +1,6 @@
 simulator lang=spectre
 
+section 10um
 parameters tigzo=30.0e-9
 parameters vthcalc=0.53-0.01*tigzo*1.0e9
 
