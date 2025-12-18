@@ -1,3 +1,4 @@
-artistResMgrCalcExprSetup("true" "plot" "E0" "VT("/net13") - VT("/net12")")
+artistResMgrCalcExprSetup("false" "plot" "E0" "VT("/net13") - VT("/net12")")
 artistResMgrCalcExprSetup("false" "plot" "E1" "VT("/net12") ")
 artistResMgrCalcExprSetup("false" "plot" "E2" "VT("/net13") ")
+artistResMgrCalcExprSetup("true" "plot" "E4" "VT("/I5/net13") - VT("/I5/net12")")

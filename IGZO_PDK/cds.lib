@@ -7,3 +7,4 @@ DEFINE lib_common /home/gigzotest/github/gigzo_pdk/IGZO_PDK/V2.1.0.beta.2.hotfix
 DEFINE avTech /tools/CADENCE/ASSURA415/tools.lnx86/assura/etc/avtech/avTech
 DEFINE nch_test /home/gigzotest/github/gigzo_pdk/IGZO_PDK/nch_test
 DEFINE 6T1C_test /home/gigzotest/github/gigzo_pdk/IGZO_PDK/6T1C_test
+DEFINE IGZO_TFT_array /home/gigzotest/github/gigzo_pdk/IGZO_PDK/IGZO_TFT_array
