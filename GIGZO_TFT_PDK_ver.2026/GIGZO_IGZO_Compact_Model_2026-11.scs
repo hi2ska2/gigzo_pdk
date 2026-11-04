@@ -1,0 +1,62 @@
+* SPICE Model : Release=gen3_v1.0.0.beta.1.1_3sigma_experimental_TFT_AC_corners Simulator=spectre
+simulator lang=spectre
+
+
+library nch
+
+section mos
+
+
+inline subckt nch (d g s)
+parameters
++ l = 5u
++ w = 5u
++ flg_local_she = -1
++ trise=0
++ dswshe = (flg_local_she == 0 || flg_local_she == 1) ? flg_local_she : flg_global_she
+//+ qscale = 1
+//+ area_ch = w*l
+
+nch (d g s g) nch w=w l=l //bulk=source
+
+Boff (d s) bsource i=(w/1u)*(5u/l)*(1+0.065u/l-0.065u/5u)*(v(d,s)/0.1)*
++ (3.06620e-15*(1+tanh((v(g,s)-0.5*v(d,s)+0.05-1.0)/1.055717))
++ +2.30036e-13*(1+tanh((v(g,s)-0.5*v(d,s)+0.05-0.52276)/0.345649))
++ +4.34219e-14*exp(-((v(g,s)-0.5*v(d,s)+0.05+0.047234)/0.190546)
++ *((v(g,s)-0.5*v(d,s)+0.05+0.047234)/0.190546)))
+
+//****************************************** nfet ******************************************
+
+model nch utsoi2 
++ type=n         level=76      version=2.20         
++ swscale=0
++ swclipchk = 1      
++ l=5.0e-6	 w=5.0e-6      tsi=3e-8	 
+
+// Vth & SS & on current
++ vfb=-0.404      ct=0.1        betn=1.2e-3*(w/l)
++ xcor=0.3	  
+
+//off current
++ toxe=6.8e-9		toxp=15.0e-9	 
++ swgidl=0    
++ igcmod=0    gigmod=0     iigmod=1
++ chib=2.0    stig=10.0    gco=1.0    
++ agidl=0     agidld=0 	   bgidl=0.0 
+
+//dibl
++ cf=0.0      gcdov=0.0   gcvdov=10.0
++ cgidl=0.0    dgidl=0.0
+
+//gate leakage parameter
++ swigate=0.0      igovacc=0.0      igovaccd=0.0
++ gc2ovacc=0	   gc3ovacc=0
+
+// Intrinsic charge geometry scaling
+//+ areaq = 1e-12
+
+ends nch
+
+endsection mos
+
+endlibrary nch
